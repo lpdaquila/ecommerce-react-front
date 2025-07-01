@@ -1,8 +1,8 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
-import PublicLayout from "./layouts/PublicLayout";
+import PublicLayout from "../components/layouts/PublicLayout/PublicLayout";
 import { lazy, Suspense } from "react";
 
-const Home = lazy(() => import('../src/pages/Home'))
+const Home = lazy(() => import('../pages/Home'))
 
 const router = createBrowserRouter(
     createRoutesFromElements(
