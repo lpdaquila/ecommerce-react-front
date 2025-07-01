@@ -2,7 +2,7 @@ import { Flex, IconButton, TextField, Container, Box } from "@radix-ui/themes";
 import NavDropdown from "./DropdownMenu";
 import { Cross1Icon, MagnifyingGlassIcon, ViewVerticalIcon } from "@radix-ui/react-icons";
 import { useContext } from "react";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import { SidebarContext } from "../../../../contexts/SidebarContext";
 
 
 export default function Header() {

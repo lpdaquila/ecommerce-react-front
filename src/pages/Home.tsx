@@ -1,5 +1,5 @@
-import SectionHeader from "../layouts/PublicLayout/Header/Section";
-import SidebarLayout from "../layouts/PublicLayout/SidebarLayout";
+import SectionHeader from "../components/layouts/PublicLayout/Section";
+import SidebarLayout from "../components/layouts/PublicLayout/SidebarLayout";
 
 export default function Home() {
     return (
