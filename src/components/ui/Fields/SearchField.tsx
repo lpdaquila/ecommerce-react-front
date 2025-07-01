@@ -3,7 +3,7 @@ import { Box, Flex, IconButton, TextField } from "@radix-ui/themes";
 
 export default function SearchField() {
     return (
-        <Flex align="center" justify="center" gap="2" className="mt-4">
+        <Flex align="center" justify="center" gap="1" className="mt-4 mr-auto">
             <TextField.Root placeholder="Search for products...">
                 <TextField.Slot>
                 </TextField.Slot>

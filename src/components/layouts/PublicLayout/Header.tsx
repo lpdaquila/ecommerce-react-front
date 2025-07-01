@@ -17,20 +17,19 @@ export default function Header() {
                     <Flex align="center" gap="4" className="backdrop-blur">
                         <NavDropdown label="Categories">
                             <DropdownContent>
-                                <DropdownItem>Teste</DropdownItem>
+                                <DropdownItem onSelect={() => console.log('clicou')}>Teste</DropdownItem>
                                 <DropdownItem>Teste2</DropdownItem>
                                 <DropdownItem>Teste3</DropdownItem>
                             </DropdownContent>
                         </NavDropdown>
                         <PrimaryButton>What's New</PrimaryButton>
                         <PrimaryButton>Blog</PrimaryButton>
-                        <Box className="pl-10">
+                        <Box className="pl-5 visible md:invisible">
                             <IconButton
                                 variant="solid"
                                 size="2"
                                 highContrast
                                 onClick={toggleSidebar}
-                                className="block md:hidden"
                                 aria-label="Alternar filtros"
                             >
                                 <DragHandleHorizontalIcon />
