@@ -1,18 +1,16 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Box, Flex, IconButton, TextField } from "@radix-ui/themes";
+import { Flex, IconButton, TextField } from "@radix-ui/themes";
 
 export default function SearchField() {
     return (
-        <Flex align="center" justify="center" gap="1" className="mt-4 mr-auto">
-            <TextField.Root placeholder="Search for products...">
-                <TextField.Slot>
+        <Flex align="start" justify="start" gap="1" className="mt-4">
+            <TextField.Root className="w-full" placeholder="Search for products...">
+                <TextField.Slot side="right">
+                    <IconButton type="submit" size="1">
+                        <MagnifyingGlassIcon />
+                    </IconButton>
                 </TextField.Slot>
             </TextField.Root>
-            <Box pl="4" className="md:pl-0">
-                <IconButton type="submit" highContrast size="2">
-                    <MagnifyingGlassIcon />
-                </IconButton>
-            </Box>
         </Flex>
     )
 }

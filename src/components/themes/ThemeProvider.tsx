@@ -13,7 +13,7 @@ export default function ThemeProvider({ children }: Props) {
             accentColor="ruby"
             grayColor='auto'
             appearance={theme}
-            radius="small"
+            radius="large"
             scaling="100%"
             panelBackground="translucent"
         >

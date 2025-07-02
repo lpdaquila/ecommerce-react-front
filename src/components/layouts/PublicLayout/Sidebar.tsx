@@ -26,7 +26,7 @@ export function Sidebar({ children }: Props) {
                     md:data-[state=closed]:translate-x-0
                     `}
                 >
-                    <aside className="h-full overflow-y-auto border-r p-4 pt-16 md:pt-4">
+                    <aside className="h-full overflow-y-auto border-r p-4 pt-32 md:pt-4">
                         {children}
                     </aside>
 
