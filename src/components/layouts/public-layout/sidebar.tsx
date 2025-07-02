@@ -1,6 +1,6 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { ReactNode, useContext } from "react";
-import { SidebarContext } from "../../../contexts/SidebarContext";
+import { SidebarContext } from "../../../contexts/sidebar-context";
 import { Flex } from "@radix-ui/themes";
 
 type Props = {

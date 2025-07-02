@@ -1,6 +1,6 @@
 import { DropdownMenu } from "@radix-ui/themes";
 import React, { forwardRef, ReactNode } from "react";
-import PrimaryButton from "../Buttons/PrimaryButton";
+import PrimaryButton from "../buttons/primary-button";
 
 type Props = {
     label?: string;

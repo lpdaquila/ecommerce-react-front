@@ -1,7 +1,7 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { FC, ReactNode } from "react";
 import { Outlet } from "react-router";
-import Header from "./Header";
+import Header from "./header";
 
 interface PublicLayoutProps {
     children?: ReactNode

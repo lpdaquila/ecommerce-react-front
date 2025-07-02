@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
-import PublicLayout from "../components/layouts/PublicLayout/PublicLayout";
+import PublicLayout from "../components/layouts/public-layout/public-layout";
 import { lazy, Suspense } from "react";
 
 const Home = lazy(() => import('../pages/Home'))

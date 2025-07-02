@@ -1,6 +1,6 @@
 import { CheckboxGroup, Heading, Separator } from "@radix-ui/themes";
-import SectionHeader from "../components/layouts/PublicLayout/Section";
-import { Sidebar } from "../components/layouts/PublicLayout/Sidebar";
+import SectionHeader from "../components/layouts/public-layout/section";
+import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import { MixerVerticalIcon } from "@radix-ui/react-icons";
 
 export default function Home() {

@@ -1,6 +1,6 @@
 import { Theme } from "@radix-ui/themes";
 import { ReactNode, useContext } from "react";
-import { ThemeContext } from "../../contexts/ThemeContext";
+import { ThemeContext } from "../../contexts/theme-context";
 
 type Props = {
     children: ReactNode;
