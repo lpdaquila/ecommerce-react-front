@@ -1,7 +1,7 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { ReactNode, useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
-import { Flex } from "@radix-ui/themes";
+import { Card, Flex } from "@radix-ui/themes";
 
 type Props = {
     children: ReactNode;
@@ -13,7 +13,7 @@ export function Sidebar({ children }: Props) {
     return (
         <Flex
             flexGrow="1"
-            width="100%"
+            width="0%"
             overflow="hidden"
             className="mx-auto"
         >
@@ -31,8 +31,10 @@ export function Sidebar({ children }: Props) {
                     md:data-[state=closed]:translate-x-0
                     `}
                 >
-                    <aside className="h-full overflow-y-auto border-r p-4 pt-32 md:pt-4">
-                        {children}
+                    <aside className="h-full overflow-y-auto border-r p-2 pt-32 md:pt-4">
+                        <Card>
+                            {children}
+                        </Card>
                     </aside>
 
                 </Collapsible.Content>
