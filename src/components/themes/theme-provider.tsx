@@ -10,10 +10,10 @@ export default function ThemeProvider({ children }: Props) {
     const { theme } = useContext(ThemeContext)
     return (
         <Theme
-            accentColor="ruby"
-            grayColor='auto'
+            accentColor="red"
+            grayColor="mauve"
             appearance={theme}
-            radius="large"
+            radius="medium"
             scaling="100%"
             panelBackground="translucent"
         >

@@ -1,15 +1,18 @@
-import { Box, Section, Text } from "@radix-ui/themes";
+import { Flex, Section, Text } from "@radix-ui/themes";
 
 export default function SectionHeader() {
     return (
-        <Section size="1">
-            <Box
-                className="bg-red-100 h-40 md:h-56 w-full mt-1 rounded-lg flex items-center justify-center"
-            >
-                <Text size="2" weight="medium" align="center">
+        <Section
+            className="bg-panel"
+            size="3"
+            mt="4"
+            mb="3"
+        >
+            <Flex justify="center">
+                <Text size="2" weight="medium">
                     Banner / Carousel
                 </Text>
-            </Box>
+            </Flex>
         </Section>
     )
 }

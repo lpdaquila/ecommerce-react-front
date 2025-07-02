@@ -1,20 +1,22 @@
 import { Flex, IconButton, Container, Text, Card } from "@radix-ui/themes";
-import { DragHandleHorizontalIcon, PersonIcon } from "@radix-ui/react-icons";
+import { DragHandleHorizontalIcon, MoonIcon, PersonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
 import PrimaryButton from "../../ui/buttons/primary-button";
 import { DropdownContent, DropdownItem, NavDropdown } from "../../ui/dropdown/nav-dropdown";
+import { ThemeContext } from "../../../contexts/theme-context";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);
+    const { theme, toggleTheme } = useContext(ThemeContext)
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
             <Flex
                 position={{ initial: "relative", md: "sticky" }}
                 direction={{ sm: "column", lg: "row" }}
-                className="bg-red-100"
+                className="bg-panel"
             >
                 <Container
                     maxWidth="200px"
@@ -39,9 +41,11 @@ export default function Header() {
                         <Flex gap="4" className="backdrop-blur">
                             <NavDropdown label="Categories">
                                 <DropdownContent>
-                                    <DropdownItem onSelect={() => console.log('clicou')}>Teste</DropdownItem>
-                                    <DropdownItem>Teste2</DropdownItem>
-                                    <DropdownItem>Teste3</DropdownItem>
+                                    <DropdownItem onSelect={() => console.log('clicou')}>Test</DropdownItem>
+                                    <DropdownItem>Test2</DropdownItem>
+                                    <DropdownItem>Test3</DropdownItem>
+                                    <DropdownItem>Test4</DropdownItem>
+                                    <DropdownItem>Test5</DropdownItem>
                                 </DropdownContent>
                             </NavDropdown>
                             <PrimaryButton>What's New</PrimaryButton>
@@ -70,7 +74,17 @@ export default function Header() {
                     justify="end"
                     display={{ initial: 'none', sm: 'inline-flex' }}>
                     <Card variant="ghost" size="2">
-                        <PrimaryButton onClick={() => console.log('click')}><PersonIcon />Sign In</PrimaryButton>
+                        <PrimaryButton onClick={() => console.log('click')}>
+                            <PersonIcon />Sign In
+                        </PrimaryButton>
+                        <IconButton
+                            ml="2"
+                            variant="soft"
+                            size="2"
+                            onClick={toggleTheme}
+                        >
+                            {theme === "light" ? <SunIcon /> : <MoonIcon />}
+                        </IconButton>
                     </Card>
                 </Flex>
             </Flex>

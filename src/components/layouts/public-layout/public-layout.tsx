@@ -1,7 +1,6 @@
-import { Box, Flex } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { FC, ReactNode } from "react";
 import { Outlet } from "react-router";
-import Header from "./header";
 
 interface PublicLayoutProps {
     children?: ReactNode
@@ -9,13 +8,11 @@ interface PublicLayoutProps {
 
 const PublicLayout: FC<PublicLayoutProps> = ({ children }) => {
     return (
-        <Box className="min-h-screen flex flex-col">
-            <Header />
-
-            <Flex asChild className="flex-1">
-                {children ?? <Outlet />}
-            </Flex>
-        </Box>
+        // <Box className="min-h-screen flex flex-col">
+        <Flex asChild flexGrow="0">
+            {children ?? <Outlet />}
+        </Flex>
+        // </Box>
     );
 };
 

@@ -11,7 +11,12 @@ export function Sidebar({ children }: Props) {
     const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
 
     return (
-        <Flex className="flex-1 w-full max-w-7x1 mx-auto overflow-hidden">
+        <Flex
+            flexGrow="1"
+            width="100%"
+            overflow="hidden"
+            className="mx-auto"
+        >
             <Collapsible.Root
                 open={sidebarToggle}
                 onOpenChange={toggleSidebar}
