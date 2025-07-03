@@ -1,4 +1,4 @@
-import { Permission } from "./Permissions";
+import { Permission } from "./permissions";
 
 export type User = {
     name: string;
@@ -28,7 +28,12 @@ export type APIGetUser = {
 
 export type APISignIn = {
     user: User;
-    userType: UserType;
     refresh: string;
     access: string;
+}
+
+export type APISignUp = {
+    name: string,
+    email: string,
+    password: string,
 }

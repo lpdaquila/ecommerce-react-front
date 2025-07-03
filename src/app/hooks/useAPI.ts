@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { APIError } from "../types/API";
+import { APIError } from "../types/api";
 import { handleGetAccessToken } from "./useAuth";
 
 const baseURL = 'http://localhost:8000/api/v1'

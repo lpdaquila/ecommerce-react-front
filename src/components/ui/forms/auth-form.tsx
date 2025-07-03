@@ -2,22 +2,27 @@ import { Button, Callout, Flex, Heading, Link, Strong, Text, TextField } from "@
 import * as Form from "@radix-ui/react-form";
 import { useState } from "react";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
+import { useAuth } from "../../../app/hooks/useAuth";
 
 export function AuthForm() {
     const [apiError, setApiError] = useState('');
+
+    const { handleSignIn } = useAuth();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         setApiError('');
 
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        formData.delete('error')
         const body = Object.fromEntries(formData);
 
-        const error = "Incorrect email or password";
+        const response = await handleSignIn(
+            body.email as string,
+            body.password as string
+        );
 
-        if (error) {
-            setApiError(error);
+        if (response.detail) {
+            setApiError(`${response.detail}`);
             return;
         }
 
@@ -43,12 +48,7 @@ export function AuthForm() {
                 onSubmit={handleSubmit}
                 style={{ width: "300px" }}
             >
-                <Form.Field
-                    style={{
-                        marginBottom: "5%"
-                    }}
-                    name="email"
-                >
+                <Form.Field style={{ marginBottom: "5%" }} name="email">
                     <Flex gap="5" justify="between">
                         <Form.Label >
                             <Text size="2">
@@ -109,17 +109,7 @@ export function AuthForm() {
                         </Link>
                     </Flex>
                 </Form.Field>
-                <Form.Field name="error">
-                    <Form.Control asChild>
-                        <input type="hidden" />
-                    </Form.Control>
-                    <Form.Message
-                        match="badInput"
-                        style={{ color: "var(--red-10)" }}
-                    >
-                        <Text size="1"> errr</Text>
-                    </Form.Message>
-                </Form.Field>
+
                 <Form.Submit>
                     <Button style={{ width: "300px" }} asChild>
                         <Text>Sign in</Text>

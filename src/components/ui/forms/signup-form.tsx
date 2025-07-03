@@ -1,12 +1,17 @@
-import { Button, Flex, Heading, Strong, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, Flex, Heading, Strong, Text, TextField } from "@radix-ui/themes";
 import * as Form from "@radix-ui/react-form";
 import { useRef, useState } from "react";
+import { useAuth } from "../../../app/hooks/useAuth";
+import { CrossCircledIcon } from "@radix-ui/react-icons";
 
 export function SignUpForm() {
-    const apiError = useRef<HTMLInputElement>(null);
+    const emailError = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirmRef = useRef<HTMLInputElement>(null);
 
+    const { handleSignUp } = useAuth();
+
+    const [apiError, setApiError] = useState('');
 
     function handlePasswordCheck() {
         const mismatch = passwordRef.current?.value !== confirmRef.current?.value;
@@ -22,30 +27,30 @@ export function SignUpForm() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
-        apiError.current?.setCustomValidity('');
-
-        if (passwordRef.current?.value !== confirmRef.current?.value) {
-
-            return;
-        }
+        emailError.current?.setCustomValidity('');
+        setApiError('');
 
         const body = Object.fromEntries(
-            [...formData.entries()].filter(([key]) => !['pswrd-confirm', 'error'].includes(key))
+            [...formData.entries()].filter(([key]) => !['pswrd-confirm'].includes(key))
         );
 
-        const error = "error";
+        const response = await handleSignUp(
+            body.name as string,
+            body.email as string,
+            body.password as string
+        )
 
-        if (error) {
-            console.log('erro da api antes: ', apiError.current?.validationMessage)
-            apiError.current?.setCustomValidity(`${error}`)
-            console.log('e:', error)
-            console.log('erro da api depois: ', apiError.current?.validationMessage)
-            return;
+        if (response.detail) {
+            if (response.detail == "Email already in use") {
+                emailError.current?.setCustomValidity(`${response.detail}`)
+                return;
+            }
+
+            setApiError(`${response.detail}`)
         }
 
         return console.log(body);
     }
-    // const [errorMsg, setErrorMsg] = useState('asd');
 
     return (
         <>
@@ -56,6 +61,12 @@ export function SignUpForm() {
             >
                 Create an account
             </Heading>
+            {apiError &&
+                <Callout.Root mb="3" color="red">
+                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
+                    <Callout.Text>{apiError}</Callout.Text>
+                </Callout.Root>
+            }
             <Form.Root
                 onSubmit={handleSubmit}
                 style={{ width: "300px" }}
@@ -114,7 +125,7 @@ export function SignUpForm() {
                             <Text size="1">Please provide a valid email</Text>
                         </Form.Message>
                         <Form.Message
-                            match={(value, formData) => apiError.current?.validationMessage !== undefined}
+                            match={(_value, _formData) => emailError.current?.validationMessage !== undefined}
                             style={{ color: "var(--red-10)" }}
                         >
                             <Text size="1">Email already in use</Text>
@@ -122,7 +133,7 @@ export function SignUpForm() {
                     </Flex>
                     <Form.Control asChild>
                         <TextField.Root
-                            ref={apiError}
+                            ref={emailError}
                             placeholder="Enter your email"
                             type="email"
                             required
@@ -187,24 +198,13 @@ export function SignUpForm() {
                         />
                     </Form.Control>
                 </Form.Field>
-                <Form.Field name="error">
-                    <Form.Control asChild>
-                        <input type="hidden" />
-                    </Form.Control>
-                    <Form.Message
-                        match="badInput"
-                        style={{ color: "var(--red-10)" }}
-                    >
-                        <Text size="1"> errr</Text>
-                    </Form.Message>
-                </Form.Field>
+
                 <Form.Submit>
                     <Button style={{ width: "300px" }} asChild>
                         <Text>Create account</Text>
                     </Button>
                 </Form.Submit>
             </Form.Root>
-            <Text>Email already in use</Text>
         </>
     )
 }
