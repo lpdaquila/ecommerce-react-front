@@ -11,6 +11,7 @@ const PrimaryButton = forwardRef<HTMLButtonElement, Props>(
             ref={ref}
             variant="solid"
             size="2"
+            style={{ cursor: "var(--cursor-link)" }}
             className={`inline-flex items-center gap-1 mx-1 ${className ?? ""}`}
             {...props}
         >

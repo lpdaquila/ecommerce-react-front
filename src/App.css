@@ -3,3 +3,23 @@
 .bg-panel {
     background-color: var(--accent-3);
 }
+
+.bg-panel-alt {
+    background-color: var(--accent-3);
+}
+
+@media (min-width: 480px) {
+    .bg-panel-alt {
+        background-color: var(--accent-0);
+    }
+}
+
+.resp-width {
+    width: 47%;
+}
+
+@media (min-width: 768px) {
+    .resp-width {
+        width: 100%;
+    }
+}

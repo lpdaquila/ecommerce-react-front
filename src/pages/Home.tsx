@@ -1,4 +1,4 @@
-import { CheckboxGroup, Container, Flex, Grid, Heading, Section, Separator } from "@radix-ui/themes";
+import { CheckboxGroup, Container, Flex, Grid, Heading, Separator } from "@radix-ui/themes";
 import SectionHeader from "../components/layouts/public-layout/section";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import Header from "../components/layouts/public-layout/header";
@@ -23,8 +23,14 @@ export default function Home() {
                         <CheckboxGroup.Item value="5">Test</CheckboxGroup.Item>
                     </CheckboxGroup.Root>
                 </Sidebar>
-                <Container size="3" mr="10%" mt="3">
+                <Container size="3" mr="7%" mt="3" ml="3">
                     <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="4" width="112%">
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
+                        <ProductCard />
                         <ProductCard />
                         <ProductCard />
                         <ProductCard />

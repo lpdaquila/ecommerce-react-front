@@ -8,11 +8,9 @@ interface PublicLayoutProps {
 
 const PublicLayout: FC<PublicLayoutProps> = ({ children }) => {
     return (
-        // <Box className="min-h-screen flex flex-col">
-        <Flex asChild flexGrow="0">
+        <Flex asChild flexGrow="1" className="min-h-screen min-w-screen">
             {children ?? <Outlet />}
         </Flex>
-        // </Box>
     );
 };
 
