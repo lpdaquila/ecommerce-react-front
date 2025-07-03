@@ -3,6 +3,7 @@ import PublicLayout from "../components/layouts/public-layout/public-layout";
 import { lazy, Suspense } from "react";
 
 const Home = lazy(() => import('../pages/Home'))
+const SignIn = lazy(() => import('../pages/SignIn'))
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -11,6 +12,11 @@ const router = createBrowserRouter(
                 <Route index element={
                     <Suspense fallback="loading...">
                         <Home />
+                    </Suspense>
+                } />
+                <Route path="signin" element={
+                    <Suspense fallback="loading...">
+                        <SignIn />
                     </Suspense>
                 } />
             </Route>

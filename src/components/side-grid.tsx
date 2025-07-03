@@ -1,17 +1,12 @@
-import { Card, Grid, IconButton } from "@radix-ui/themes";
+import { Card, Grid } from "@radix-ui/themes";
 import PrimaryButton from "./ui/buttons/primary-button";
-import { PersonIcon } from "@radix-ui/react-icons";
-import { MoonIcon, ShoppingCart, SunIcon } from "lucide-react";
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/theme-context";
+import { ShoppingCart } from "lucide-react";
 
 type Props = {
     isMedia?: boolean;
 }
 
 export function SideGrid({ isMedia = false }: Props) {
-    const { theme, toggleTheme } = useContext(ThemeContext)
-
     return (
         <Grid
             mt="3"
@@ -21,22 +16,12 @@ export function SideGrid({ isMedia = false }: Props) {
         >
             <Card variant="ghost" size="2">
                 <PrimaryButton
-                    mb="2"
-                    onClick={() => console.log('click')}>
-                    <PersonIcon />Sign In
-                </PrimaryButton>
-                <IconButton
-                    ml="2"
-                    variant="soft"
-                    size="2"
-                    onClick={toggleTheme}
+                    mr="7"
+                    mb="3"
+                    variant="ghost"
+                    style={{ width: `${isMedia ? "57%" : "100%"}` }}
                 >
-                    {theme === "light" ? <SunIcon /> : <MoonIcon />}
-                </IconButton>
-            </Card>
-            <Card variant="ghost" size="2">
-                <PrimaryButton mr="2" style={{ width: `${isMedia ? "57%" : "100%"}` }}>
-                    <ShoppingCart size={20} />Cart
+                    <ShoppingCart size={40} />
                 </PrimaryButton>
             </Card>
         </Grid>

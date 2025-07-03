@@ -1,11 +1,18 @@
 @import "@radix-ui/themes/styles.css";
 
+.header {
+    background-color: var(--accent-2);
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+
 .bg-panel {
-    background-color: var(--accent-3);
+    background-color: var(--accent-4);
 }
 
 .bg-panel-alt {
-    background-color: var(--accent-3);
+    background-color: var(--accent-4);
 }
 
 @media (min-width: 480px) {

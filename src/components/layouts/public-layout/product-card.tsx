@@ -9,7 +9,7 @@ export function ProductCard() {
         <Card
             style={{
                 maxHeight: "500px",
-                boxShadow: "var(--shadow-5)"
+                boxShadow: "var(--shadow-5)",
             }}
             size="3"
             mb="3"

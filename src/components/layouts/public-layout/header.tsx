@@ -1,4 +1,4 @@
-import { Flex, IconButton, Container, Text } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Text, Separator } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
@@ -6,13 +6,25 @@ import PrimaryButton from "../../ui/buttons/primary-button";
 import { DropdownContent, DropdownItem, NavDropdown } from "../../ui/dropdown/nav-dropdown";
 import { SideGrid } from "../../side-grid";
 import { MenuIcon } from "lucide-react";
+import { TopButtons } from "../../top-buttons";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);
 
     return (
-        <header className="relative top-0 z-50 w-full border-b bg-background/95 bg-panel">
+        <header
+            style={{
+                backgroundColor: "var(--accent-2)",
+                position: "relative",
+                top: "0",
+                width: "100%",
+                zIndex: "50"
+            }}
+            className="bg-background/95"
+        >
+            <TopButtons />
             <Flex
+                className="bg-panel"
                 position={{ initial: "relative", md: "sticky" }}
                 direction={{ sm: "column", lg: "row" }}
             >
@@ -33,7 +45,7 @@ export default function Header() {
                         justify="start"
                         gap="4"
                         mt="2"
-                        mb={{ initial: "2", sm: "0" }}
+                        mb="2"
                     >
                         <Flex gap="4" className="backdrop-blur">
                             <Flex
@@ -58,9 +70,9 @@ export default function Header() {
                                     <DropdownItem>Test5</DropdownItem>
                                 </DropdownContent>
                             </NavDropdown>
-                            <PrimaryButton>What's New</PrimaryButton>
-                            <PrimaryButton>Blog</PrimaryButton>
-                            <PrimaryButton>Test</PrimaryButton>
+                            <PrimaryButton variant="ghost">What's New</PrimaryButton>
+                            <PrimaryButton variant="ghost">Blog</PrimaryButton>
+                            <PrimaryButton variant="ghost">Test</PrimaryButton>
                         </Flex>
                     </Flex>
                 </Container>
@@ -73,6 +85,7 @@ export default function Header() {
                     <SideGrid />
                 </Flex>
             </Flex>
+            <Separator size="4" />
         </header>
     )
 }

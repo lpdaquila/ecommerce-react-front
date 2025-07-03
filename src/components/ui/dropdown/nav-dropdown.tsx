@@ -11,7 +11,7 @@ const TriggerButton = forwardRef<
     HTMLButtonElement,
     React.ComponentProps<typeof PrimaryButton>
 >(({ children, ...props }, ref) => (
-    <PrimaryButton ref={ref} {...props} isDropdown>
+    <PrimaryButton variant="ghost" ref={ref} {...props} isDropdown>
         {children}
     </PrimaryButton>
 ));
@@ -35,7 +35,7 @@ export function DropdownContent({ children }: Props) {
     return (
         <DropdownMenu.Content
             sideOffset={4}
-            className="min-w-[160px] rounded-md border bg-background shadow-lg p-2"
+            className="min-w-[160px] shadow-lg"
         >
             {children}
         </DropdownMenu.Content>

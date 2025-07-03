@@ -30,7 +30,7 @@ export function Sidebar({ children }: Props) {
                     md:data-[state=closed]:translate-x-0
                     `}
                 >
-                    <aside className="h-full overflow-y-auto border-r p-2 pt-32 md:pt-4">
+                    <aside className="h-full overflow-y-auto p-2 pt-32 md:pt-4">
                         {sidebarToggle &&
                             <Box>
                                 <SideGrid isMedia />
