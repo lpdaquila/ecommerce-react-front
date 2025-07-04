@@ -1,9 +1,8 @@
-import { Flex, IconButton, Container, Text, Separator } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Text, Separator, HoverCard, Button, Link } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
 import PrimaryButton from "../../ui/buttons/primary-button";
-import { DropdownContent, DropdownItem, NavDropdown } from "../../ui/dropdown/nav-dropdown";
 import { SideGrid } from "../../side-grid";
 import { MenuIcon } from "lucide-react";
 import { TopButtons } from "../../top-buttons";
@@ -61,15 +60,20 @@ export default function Header() {
                                     <MenuIcon />
                                 </IconButton>
                             </Flex>
-                            <NavDropdown label="Categories">
-                                <DropdownContent>
-                                    <DropdownItem onSelect={() => console.log('clicou')}>Test</DropdownItem>
-                                    <DropdownItem>Test2</DropdownItem>
-                                    <DropdownItem>Test3</DropdownItem>
-                                    <DropdownItem>Test4</DropdownItem>
-                                    <DropdownItem>Test5</DropdownItem>
-                                </DropdownContent>
-                            </NavDropdown>
+                            <HoverCard.Root>
+                                <HoverCard.Trigger>
+                                    <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>
+                                </HoverCard.Trigger>
+                                <HoverCard.Content>
+                                    <Flex direction="column" width="100px">
+                                        <Link href="#">Test</Link>
+                                        <Link href="#">Test</Link>
+                                        <Link href="#">Test</Link>
+                                        <Link href="#">Test</Link>
+                                        <Link href="#">Test</Link>
+                                    </Flex>
+                                </HoverCard.Content>
+                            </HoverCard.Root>
                             <PrimaryButton variant="ghost">What's New</PrimaryButton>
                             <PrimaryButton variant="ghost">Blog</PrimaryButton>
                             <PrimaryButton variant="ghost">Test</PrimaryButton>

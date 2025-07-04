@@ -3,11 +3,14 @@ import * as Form from "@radix-ui/react-form";
 import { useRef, useState } from "react";
 import { useAuth } from "../../../app/hooks/useAuth";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
+import { useNavigate } from "react-router";
 
 export function SignUpForm() {
     const emailError = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirmRef = useRef<HTMLInputElement>(null);
+
+    const navigate = useNavigate();
 
     const { handleSignUp } = useAuth();
 
@@ -47,9 +50,11 @@ export function SignUpForm() {
             }
 
             setApiError(`${response.detail}`)
+            return;
         }
 
-        return console.log(body);
+        navigate('/')
+
     }
 
     return (
@@ -125,7 +130,7 @@ export function SignUpForm() {
                             <Text size="1">Please provide a valid email</Text>
                         </Form.Message>
                         <Form.Message
-                            match={(_value, _formData) => emailError.current?.validationMessage !== undefined}
+                            match={(_value, _formData) => emailError.current?.validationMessage !== ''}
                             style={{ color: "var(--red-10)" }}
                         >
                             <Text size="1">Email already in use</Text>

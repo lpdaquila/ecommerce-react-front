@@ -28,13 +28,11 @@ export const ThemeContextProvider: FC<React.PropsWithChildren<{}>> = ({ children
         if (storedTheme === 'dark' || storedTheme === 'light') {
             setTheme(storedTheme);
         }
-        console.log('tema nao setado, tema no localStorage:', storedTheme)
     }, [])
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("app-theme", theme);
-        console.log(`o tema ${theme} foi pro localStorage`)
     }, [theme]);
 
     return (

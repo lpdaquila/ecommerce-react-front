@@ -102,7 +102,7 @@ export function AuthForm() {
                         />
                     </Form.Control>
                     <Flex direction="column" align="end">
-                        <Link style={{ color: "var(--accent-7)" }} href="/">
+                        <Link style={{ color: "var(--accent-8)" }} href="/">
                             <Text size="1">
                                 Forgot your password ?
                             </Text>
