@@ -1,9 +1,11 @@
 import { Card, IconButton, Separator } from "@radix-ui/themes";
-import { SecondaryButton } from "./ui/buttons/secondary-button";
-import { MoonIcon, PersonIcon, SunIcon } from "@radix-ui/react-icons";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/theme-context";
-import { useNavigate } from "react-router";
+
+import { useAuth } from "../app/hooks/useAuth";
+import { LoginButton } from "./ui/buttons/login-button";
+import { ProfileCard } from "./ui/cards/profile-card";
 
 type Props = {
     isMedia?: boolean;
@@ -11,7 +13,8 @@ type Props = {
 
 export function TopButtons({ isMedia = false }: Props) {
     const { theme, toggleTheme } = useContext(ThemeContext)
-    const navigate = useNavigate();
+
+    const { isLogged } = useAuth();
 
     return (
         <>
@@ -19,12 +22,13 @@ export function TopButtons({ isMedia = false }: Props) {
                 mt="2"
                 style={{ justifySelf: `${isMedia ? "start" : "end"}` }}
                 variant="ghost"
-                size="2">
-                <SecondaryButton
-                    mb="2"
-                    onClick={() => navigate('/signin')}>
-                    <PersonIcon />Sign In
-                </SecondaryButton>
+                size="2"
+                mb="2"
+            >
+                {isLogged ?
+                    <ProfileCard /> :
+                    <LoginButton />
+                }
                 <IconButton
                     ml="2"
                     variant="soft"

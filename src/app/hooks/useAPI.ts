@@ -22,6 +22,7 @@ export async function useAPI<TypeDataResponse>(
         headers['Authorization'] = `Bearer ${access_token}`
     }
 
+    console.log('data:', data)
     try {
         const request = await axios(`${baseURL}/${endpoint}`, {
             method,
@@ -30,7 +31,8 @@ export async function useAPI<TypeDataResponse>(
             params: method == 'GET' && data
         })
 
-        // console.log(request.data) // debug
+        console.log('access token: ', headers['Authorization'])
+        console.log(request.data) // debug
 
         return {
             data: request.data,

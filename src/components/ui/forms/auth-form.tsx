@@ -3,11 +3,14 @@ import * as Form from "@radix-ui/react-form";
 import { useState } from "react";
 import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { useAuth } from "../../../app/hooks/useAuth";
+import { useNavigate } from "react-router";
 
 export function AuthForm() {
     const [apiError, setApiError] = useState('');
 
     const { handleSignIn } = useAuth();
+
+    const navigate = useNavigate();
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         setApiError('');
@@ -26,7 +29,8 @@ export function AuthForm() {
             return;
         }
 
-        return console.log(body);
+        console.log(response.data);
+        navigate('/')
     }
 
     return (

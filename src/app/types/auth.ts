@@ -1,18 +1,11 @@
 import { Permission } from "./permissions";
 
-export type User = {
-    name: string;
-    email: string;
-    password: string;
-}
-
 export type UserType = {
     is_staff: boolean;
     permissions: Permission[]
 }
 
 export type Profile = {
-    id: number;
     name: string;
     email: string;
     phone?: string;
@@ -22,12 +15,11 @@ export type Profile = {
 // API
 
 export type APIGetUser = {
-    user: User;
-    userType: UserType;
+    profile: Profile;
 }
 
 export type APISignIn = {
-    user: User;
+    profile: Profile;
     refresh: string;
     access: string;
 }

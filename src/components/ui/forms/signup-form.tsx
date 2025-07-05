@@ -6,7 +6,6 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
 
 export function SignUpForm() {
-    const emailError = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const confirmRef = useRef<HTMLInputElement>(null);
 
@@ -30,7 +29,6 @@ export function SignUpForm() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
 
-        emailError.current?.setCustomValidity('');
         setApiError('');
 
         const body = Object.fromEntries(
@@ -44,10 +42,6 @@ export function SignUpForm() {
         )
 
         if (response.detail) {
-            if (response.detail == "Email already in use") {
-                emailError.current?.setCustomValidity(`${response.detail}`)
-                return;
-            }
 
             setApiError(`${response.detail}`)
             return;
@@ -129,16 +123,9 @@ export function SignUpForm() {
                         >
                             <Text size="1">Please provide a valid email</Text>
                         </Form.Message>
-                        <Form.Message
-                            match={(_value, _formData) => emailError.current?.validationMessage !== ''}
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Email already in use</Text>
-                        </Form.Message>
                     </Flex>
                     <Form.Control asChild>
                         <TextField.Root
-                            ref={emailError}
                             placeholder="Enter your email"
                             type="email"
                             required

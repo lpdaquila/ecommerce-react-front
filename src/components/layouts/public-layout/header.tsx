@@ -1,4 +1,4 @@
-import { Flex, IconButton, Container, Text, Separator, HoverCard, Button, Link } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Text, Separator, HoverCard, Link } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
