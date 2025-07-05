@@ -6,6 +6,7 @@ import PrimaryButton from "../../ui/buttons/primary-button";
 import { SideGrid } from "../../side-grid";
 import { MenuIcon } from "lucide-react";
 import { TopButtons } from "../../top-buttons";
+import { ResponsiveCard } from "../../ui/cards/responsive-card";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);
@@ -65,7 +66,18 @@ export default function Header() {
                         mb="2"
                     >
                         <Flex gap="4" className="backdrop-blur">
-                            <HoverCard.Root>
+                            <ResponsiveCard trigger={
+                                <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>
+                            }>
+                                <Flex direction="column" width="100px">
+                                    <Link href="#">Test</Link>
+                                    <Link href="#">Test</Link>
+                                    <Link href="#">Test</Link>
+                                    <Link href="#">Test</Link>
+                                    <Link href="#">Test</Link>
+                                </Flex>
+                            </ResponsiveCard>
+                            {/* <HoverCard.Root>
                                 <HoverCard.Trigger>
                                     <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>
                                 </HoverCard.Trigger>
@@ -78,7 +90,7 @@ export default function Header() {
                                         <Link href="#">Test</Link>
                                     </Flex>
                                 </HoverCard.Content>
-                            </HoverCard.Root>
+                            </HoverCard.Root> */}
                             <PrimaryButton variant="ghost">What's New</PrimaryButton>
                             <PrimaryButton variant="ghost">Blog</PrimaryButton>
                             <PrimaryButton variant="ghost">Test</PrimaryButton>

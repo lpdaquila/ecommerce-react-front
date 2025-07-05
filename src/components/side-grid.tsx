@@ -1,6 +1,7 @@
 import { Box, Text, Grid, HoverCard, Card } from "@radix-ui/themes";
 import PrimaryButton from "./ui/buttons/primary-button";
 import { ShoppingCart } from "lucide-react";
+import ShoppingCartBtn from "./ui/buttons/cart-button";
 
 type Props = {
     isMedia?: boolean;
@@ -17,15 +18,7 @@ export function SideGrid({ isMedia = false }: Props) {
 
             <HoverCard.Root openDelay={100} closeDelay={150}>
                 <HoverCard.Trigger>
-                    <PrimaryButton
-                        mt={{ initial: '5', md: '2' }}
-                        mr="7"
-                        mb="3"
-                        variant="ghost"
-                        style={{ width: isMedia ? '57%' : '100%' }}
-                    >
-                        <ShoppingCart size={40} />
-                    </PrimaryButton>
+                    <ShoppingCartBtn />
                 </HoverCard.Trigger>
 
                 <HoverCard.Content

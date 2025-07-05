@@ -1,16 +1,30 @@
-import { Card, CheckboxGroup, Container, Flex, Grid, Heading, Separator } from "@radix-ui/themes";
+import { Card, CheckboxGroup, Container, Flex, Grid, Heading, Popover, Separator } from "@radix-ui/themes";
 import SectionHeader from "../components/layouts/public-layout/section";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import Header from "../components/layouts/public-layout/header";
 import { ProductCard } from "../components/layouts/public-layout/product-card";
+import { useContext } from "react";
+import { SidebarContext } from "../contexts/sidebar-context";
+import { CartItemsCard } from "../components/ui/cards/cart-items-card";
+import ShoppingCartBtn from "../components/ui/buttons/cart-button";
 
 export default function Home() {
+    const { sidebarToggle } = useContext(SidebarContext);
     return (
         <>
             <Header />
             <SectionHeader />
             <Flex direction="row">
                 <Sidebar>
+                    {sidebarToggle &&
+                        <Popover.Root>
+                            <Popover.Trigger>
+                                <ShoppingCartBtn />
+                            </Popover.Trigger>
+                            <Popover.Content>
+                                <CartItemsCard />
+                            </Popover.Content>
+                        </Popover.Root>}
                     <Card mt="2">
                         <Heading as="h2" size="3">
                             Filters
