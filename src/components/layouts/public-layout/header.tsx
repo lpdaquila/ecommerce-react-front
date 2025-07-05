@@ -1,4 +1,4 @@
-import { Flex, IconButton, Container, Text, Separator, HoverCard, Link } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Text, Separator, HoverCard, Link, Card, Box } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
@@ -21,7 +21,25 @@ export default function Header() {
             }}
             className="bg-background/95"
         >
-            <TopButtons />
+            <Flex direction="row"
+                justify={{ initial: "between", md: "end" }}
+                align="center">
+                <Box
+                    display={{ initial: 'block', md: 'none' }}>
+                    <IconButton
+                        variant="solid"
+                        size="2"
+                        highContrast
+                        onClick={toggleSidebar}
+                        aria-label="Alternar filtros"
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                </Box>
+                <Flex direction="column" align="end" justify="end">
+                    <TopButtons />
+                </Flex>
+            </Flex>
             <Flex
                 className="bg-panel"
                 position={{ initial: "relative", md: "sticky" }}
@@ -47,19 +65,6 @@ export default function Header() {
                         mb="2"
                     >
                         <Flex gap="4" className="backdrop-blur">
-                            <Flex
-                                justify="start"
-                                display={{ initial: 'flex', sm: 'none' }}>
-                                <IconButton
-                                    variant="solid"
-                                    size="2"
-                                    highContrast
-                                    onClick={toggleSidebar}
-                                    aria-label="Alternar filtros"
-                                >
-                                    <MenuIcon />
-                                </IconButton>
-                            </Flex>
                             <HoverCard.Root>
                                 <HoverCard.Trigger>
                                     <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>

@@ -10,13 +10,13 @@ import { store } from './services/redux/store.ts';
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root!).render(
-  // <StrictMode>
-  <ThemeContextProvider>
-    <SidebarProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </SidebarProvider>
-  </ThemeContextProvider>
-  // </StrictMode>,
+  <StrictMode>
+    <ThemeContextProvider>
+      <SidebarProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </SidebarProvider>
+    </ThemeContextProvider>
+  </StrictMode>,
 )

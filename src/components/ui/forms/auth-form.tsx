@@ -40,7 +40,7 @@ export function AuthForm() {
                     marginBottom: "10%"
                 }}
             >
-                Sign in
+                Login
             </Heading>
             {apiError &&
                 <Callout.Root mb="3" color="red">
@@ -116,7 +116,7 @@ export function AuthForm() {
 
                 <Form.Submit>
                     <Button style={{ width: "300px" }} asChild>
-                        <Text>Sign in</Text>
+                        <Text>Login</Text>
                     </Button>
                 </Form.Submit>
             </Form.Root>

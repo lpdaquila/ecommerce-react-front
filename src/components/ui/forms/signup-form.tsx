@@ -15,16 +15,6 @@ export function SignUpForm() {
 
     const [apiError, setApiError] = useState('');
 
-    function handlePasswordCheck() {
-        const mismatch = passwordRef.current?.value !== confirmRef.current?.value;
-
-        confirmRef.current?.setCustomValidity(
-            mismatch ? 'Passwords do not match' : ''
-        )
-
-        return mismatch;
-    }
-
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -42,13 +32,11 @@ export function SignUpForm() {
         )
 
         if (response.detail) {
-
             setApiError(`${response.detail}`)
             return;
         }
 
         navigate('/')
-
     }
 
     return (
@@ -146,7 +134,7 @@ export function SignUpForm() {
                             <Text size="1">Please give a password</Text>
                         </Form.Message>
                         <Form.Message
-                            match={(_value, _formData) => handlePasswordCheck()}
+                            match={(value, formData) => value !== formData.get("pswrd-confirm")}
                             style={{ color: "var(--red-10)" }}
                         >
                             <Text size="1">Passwords don't match</Text>
@@ -175,7 +163,7 @@ export function SignUpForm() {
                             <Text size="1">Confirm your password</Text>
                         </Form.Message>
                         <Form.Message
-                            match={(_value, _formData) => handlePasswordCheck()}
+                            match={(value, formData) => value !== formData.get("password")}
                             style={{ color: "var(--red-10)" }}
                         >
                             <Text size="1">Passwords don't match</Text>

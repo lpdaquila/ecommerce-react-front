@@ -8,7 +8,7 @@ export function LoginButton() {
         <SecondaryButton
             mb="2"
             onClick={() => navigate('/signin')}>
-            <PersonIcon />Sign In
+            <PersonIcon />Login
         </SecondaryButton>
     )
 }

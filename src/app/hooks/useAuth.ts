@@ -30,13 +30,10 @@ export function useAuth() {
         const refresh = handleGetRefreshToken();
         if (!refresh) return false;
 
-        console.log('refresh token: ', refresh)
-
         const response = await refreshToken(refresh);
         if (!response.detail) {
             const data = response.data as { access: string };
             localStorage.setItem(LOCAL_STORAGE_KEY, data.access);
-            console.log('token no local storage:', LOCAL_STORAGE_KEY)
             return true;
         }
         return false;
@@ -60,8 +57,6 @@ export function useAuth() {
         if (!response.detail && response.data) {
             dispatch(setUser(response.data.profile))
         }
-
-        console.log(response.detail)
     }
 
     async function handleSignIn(email: string, password: string) {

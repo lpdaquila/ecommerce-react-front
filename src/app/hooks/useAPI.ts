@@ -31,8 +31,7 @@ export async function useAPI<TypeDataResponse>(
             params: method == 'GET' && data
         })
 
-        console.log('access token: ', headers['Authorization'])
-        console.log(request.data) // debug
+        // console.log(request.data) // debug
 
         return {
             data: request.data,

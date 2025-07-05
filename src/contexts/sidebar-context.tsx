@@ -1,4 +1,4 @@
-import { createContext, FC, useState } from "react";
+import { createContext, FC, useEffect, useState } from "react";
 
 type SidebarContext = {
     sidebarToggle: any;
@@ -19,6 +19,10 @@ export const SidebarProvider: FC<React.PropsWithChildren<{}>> = ({ children }) =
     const closeSidebar = () => {
         setSidebarToggle(false);
     };
+
+    useEffect(() => {
+        console.log(sidebarToggle)
+    }, [])
 
     return (
         <SidebarContext.Provider

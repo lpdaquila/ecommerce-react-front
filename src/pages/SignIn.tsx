@@ -61,7 +61,7 @@ export default function SignIn() {
                                 {isAuthForm ? " Do not have an account ?" : "Already have an account ?"}
                             </Text>
                             <SecondaryButton onClick={() => setIsAuthForm(!isAuthForm)} style={{ width: "300px" }}>
-                                {isAuthForm ? "Create an account" : "Sign in"}
+                                {isAuthForm ? "Create an account" : "Login"}
                             </SecondaryButton>
                         </Flex>
                     </Card>
