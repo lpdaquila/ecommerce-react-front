@@ -1,12 +1,12 @@
-import { Flex, IconButton, Container, Text, Separator, HoverCard, Link, Card, Box } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Text, Separator, Link, Box } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
 import SearchField from "../../ui/fields/search-field";
 import PrimaryButton from "../../ui/buttons/primary-button";
-import { SideGrid } from "../../side-grid";
 import { MenuIcon } from "lucide-react";
 import { TopButtons } from "../../top-buttons";
 import { ResponsiveCard } from "../../ui/cards/responsive-card";
+import { ShoppingCartCard } from "../../ui/cards/shopping-cart-card";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);
@@ -67,8 +67,8 @@ export default function Header() {
                     >
                         <Flex gap="4" className="backdrop-blur">
                             <ResponsiveCard trigger={
-                                <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>
-                            }>
+                                <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>}
+                            >
                                 <Flex direction="column" width="100px">
                                     <Link href="#">Test</Link>
                                     <Link href="#">Test</Link>
@@ -77,20 +77,6 @@ export default function Header() {
                                     <Link href="#">Test</Link>
                                 </Flex>
                             </ResponsiveCard>
-                            {/* <HoverCard.Root>
-                                <HoverCard.Trigger>
-                                    <PrimaryButton variant="ghost" isDropdown>Categories</PrimaryButton>
-                                </HoverCard.Trigger>
-                                <HoverCard.Content>
-                                    <Flex direction="column" width="100px">
-                                        <Link href="#">Test</Link>
-                                        <Link href="#">Test</Link>
-                                        <Link href="#">Test</Link>
-                                        <Link href="#">Test</Link>
-                                        <Link href="#">Test</Link>
-                                    </Flex>
-                                </HoverCard.Content>
-                            </HoverCard.Root> */}
                             <PrimaryButton variant="ghost">What's New</PrimaryButton>
                             <PrimaryButton variant="ghost">Blog</PrimaryButton>
                             <PrimaryButton variant="ghost">Test</PrimaryButton>
@@ -102,8 +88,9 @@ export default function Header() {
                     mb="3"
                     mr="2"
                     justify="end"
-                    display={{ initial: 'none', sm: 'flex' }}>
-                    <SideGrid />
+                    display={{ initial: 'none', lg: 'flex' }}
+                >
+                    <ShoppingCartCard />
                 </Flex>
             </Flex>
             <Separator size="4" />

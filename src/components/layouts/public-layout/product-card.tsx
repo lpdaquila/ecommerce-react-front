@@ -8,11 +8,16 @@ export function ProductCard() {
     return (
         <Card
             style={{
-                maxHeight: "500px",
+                height: "420px",
+                width: "310px",
                 boxShadow: "var(--shadow-5)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
             }}
             size="3"
             mb="3"
+            ml="3"
             variant="surface"
             className="resp-width"
         >
@@ -24,12 +29,12 @@ export function ProductCard() {
             </Inset>
             <Separator size="4" />
             <Text size="3" as="p" mt="2" mb="2">
-                <Link href="#">Prod description</Link>
+                <Link href="#">Prod description </Link>
             </Text>
             <Text size="6">
                 <Strong>$700.00</Strong>
             </Text>
-            <Flex direction="row" gap="2" mt="3">
+            <Flex direction="row" position="static" gap="2" mt="3">
                 <PrimaryButton style={{ width: "40%" }}>
                     <ShoppingBag size={17} />Buy
                 </PrimaryButton>

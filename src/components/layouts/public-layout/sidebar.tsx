@@ -1,8 +1,7 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { ReactNode, useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
-import { Box, Card, Flex, IconButton } from "@radix-ui/themes";
-import { SideGrid } from "../../side-grid";
+import { Box, Flex, IconButton } from "@radix-ui/themes";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
 type Props = {
@@ -25,10 +24,10 @@ export function Sidebar({ children }: Props) {
                 <Collapsible.Content
                     forceMount
                     className={`
-                    bg-panel-alt w-64 h-full md:relative md:translate-x-0 md:block
+                    bg-panel-alt w-64 h-full lg:relative lg:translate-x-0 lg:block
                     fixed top-0 bottom-0 left-0 z-70 bg-background/95
                     transition-transform data-[state=closed]:-translate-x-full
-                    md:data-[state=closed]:translate-x-0
+                    lg:data-[state=closed]:translate-x-0
                     `}
                 >
                     <aside className="h-full overflow-y-auto p-2 pt-2 md:pt-4">
