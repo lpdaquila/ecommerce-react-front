@@ -5,21 +5,30 @@ export type UserType = {
     permissions: Permission[]
 }
 
+export type User = {
+    id: number;
+    name: string;
+}
+
 export type Profile = {
     name: string;
     email: string;
-    phone?: string;
     document?: string;
+    phone?: string;
 }
 
 // API
 
 export type APIGetUser = {
+    user: User;
+}
+
+export type APIGetProfile = {
     profile: Profile;
 }
 
 export type APISignIn = {
-    profile: Profile;
+    user: User;
     refresh: string;
     access: string;
 }

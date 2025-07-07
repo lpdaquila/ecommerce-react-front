@@ -1,7 +1,7 @@
 import { Card, CheckboxGroup, Container, Flex, Grid, Heading, Separator } from "@radix-ui/themes";
 import SectionHeader from "../components/layouts/public-layout/section";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
-import Header from "../components/layouts/public-layout/header";
+import Header from "../components/layouts/public-layout/headers/home-header";
 import { ProductCard } from "../components/layouts/public-layout/product-card";
 import { useContext } from "react";
 import { SidebarContext } from "../contexts/sidebar-context";

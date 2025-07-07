@@ -1,12 +1,12 @@
 import { Flex, IconButton, Container, Text, Separator, Link, Box } from "@radix-ui/themes";
 import { useContext } from "react";
-import { SidebarContext } from "../../../contexts/sidebar-context";
-import SearchField from "../../ui/fields/search-field";
-import PrimaryButton from "../../ui/buttons/primary-button";
+import { SidebarContext } from "../../../../contexts/sidebar-context";
+import SearchField from "../../../ui/fields/search-field";
+import PrimaryButton from "../../../ui/buttons/primary-button";
 import { MenuIcon } from "lucide-react";
-import { TopButtons } from "../../top-buttons";
-import { ResponsiveCard } from "../../ui/cards/responsive-card";
-import { ShoppingCartCard } from "../../ui/cards/shopping-cart-card";
+import { TopButtons } from "../../../top-buttons";
+import { ResponsiveCard } from "../../../ui/cards/responsive-card";
+import { ShoppingCartCard } from "../../../ui/cards/shopping-cart-card";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);

@@ -2,13 +2,13 @@ import axios, { AxiosError } from "axios";
 import { APIError } from "../types/api";
 import { handleGetAccessToken } from "./useAuth";
 
-const baseURL = 'http://localhost:8000/api/v1'
+const baseURL = import.meta.env.VITE_APP_BASE_URL
 
 export async function useAPI<TypeDataResponse>(
     endpoint: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
     data?: object,
-    withAuth: boolean = false
+    withAuth: boolean = true
 ): Promise<{
     data?: TypeDataResponse,
     detail: string
@@ -30,7 +30,7 @@ export async function useAPI<TypeDataResponse>(
             params: method == 'GET' && data
         })
 
-        // console.log(request.data) // debug
+        console.log(request.data) // debug
 
         return {
             data: request.data,

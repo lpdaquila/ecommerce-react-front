@@ -23,7 +23,7 @@ export function useAuth() {
     const { signIn, signUp, getUser, refreshToken } = useRequests();
 
     const user = {
-        profile: auth.user
+        user: auth.user
     }
 
     async function tryRefreshToken() {
@@ -55,7 +55,7 @@ export function useAuth() {
         }
 
         if (!response.detail && response.data) {
-            dispatch(setUser(response.data.profile))
+            dispatch(setUser(response.data.user))
         }
     }
 
@@ -69,7 +69,7 @@ export function useAuth() {
                     refresh: response.data?.refresh
                 }
             );
-            dispatch(setUser(response.data.profile));
+            dispatch(setUser(response.data.user));
         }
 
         return response;

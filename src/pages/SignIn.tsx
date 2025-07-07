@@ -1,11 +1,9 @@
 import { Box, Card, Container, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
-import { StoreLogo } from "../components/ui/logos/store-logo";
 import { useState } from "react";
 import { SecondaryButton } from "../components/ui/buttons/secondary-button";
 import { AuthForm } from "../components/ui/forms/auth-form";
 import { SignUpForm } from "../components/ui/forms/signup-form";
-import { ChangeThemeBtn } from "../components/ui/buttons/change-theme-button";
-import { HelpButton } from "../components/ui/buttons/help-button";
+import { Header } from "../components/layouts/public-layout/headers/user-header";
 
 export default function SignIn() {
     const [isAuthForm, setIsAuthForm] = useState(true);
@@ -22,21 +20,7 @@ export default function SignIn() {
         //     height: "100%"
         // }}
         >
-            <header
-                className="header"
-            >
-                <Flex direction="row"
-                    justify="between"
-                    align="center">
-                    <Box style={{ marginBottom: "100px" }}>
-                        <StoreLogo />
-                    </Box>
-                    <Flex direction="row" align="end" justify="end" mr="3">
-                        <HelpButton />
-                        <ChangeThemeBtn />
-                    </Flex>
-                </Flex>
-            </header>
+            <Header />
             <Separator orientation="horizontal" size="4" />
             <Grid columns={{ initial: "1", md: "2" }}>
                 <Container align="center">

@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 
 const Home = lazy(() => import('../pages/Home'))
 const SignIn = lazy(() => import('../pages/SignIn'))
+const ManageProfile = lazy(() => import('../pages/ManageProfile'))
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -17,6 +18,11 @@ const router = createBrowserRouter(
                 <Route path="signin" element={
                     <Suspense fallback="loading...">
                         <SignIn />
+                    </Suspense>
+                } />
+                <Route path="profile/:id" element={
+                    <Suspense fallback="loading...">
+                        <ManageProfile />
                     </Suspense>
                 } />
             </Route>
