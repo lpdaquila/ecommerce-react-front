@@ -29,7 +29,7 @@ export const addressSchema = z.object({
 
     zip_code: z
         .string()
-        .regex(/^d{5}-\d{3}$/, "Invalid post code, Use the format XXXXX-XXX"),
+        .regex(/^\d{5}-\d{3}$/, "Invalid post code, Use the format XXXXX-XXX"),
 
     city: z
         .string()

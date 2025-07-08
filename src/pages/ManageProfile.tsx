@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { AccountInfoCard } from "../components/ui/cards/account-info-card";
 import { useRequests } from "../app/hooks/useRequests";
 import { Profile } from "../app/types/auth";
+import { AddAddressCard } from "../components/ui/cards/create-address-card";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -58,7 +59,12 @@ export default function ManageProfile() {
                             <InfoCircledIcon />Account Info
                         </Button>
                         <Separator size="4" />
-                        <Button mt="3" mb="3" variant="ghost"><HomeIcon />Addresses</Button>
+                        <Button
+                            mt="3"
+                            mb="3"
+                            variant="ghost"
+                            onClick={() => setActiveView('addresses')}
+                        ><HomeIcon />Addresses</Button>
                         <Separator size="4" />
                         <Button mt="3" mb="3" variant="ghost"><MixerHorizontalIcon />Preferences</Button>
                         <Separator size="4" />
@@ -70,6 +76,7 @@ export default function ManageProfile() {
                     />}
                     {activeView === 'edit' && profile && <EditProfileForm
                         profile={profile} id={Number(profile_id)} />}
+                    {activeView === 'addresses' && <AddAddressCard />}
                 </Container>
             </Flex>
         </Flex>

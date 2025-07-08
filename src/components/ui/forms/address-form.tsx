@@ -7,11 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 type AddressFormProps = {
     defaultValues?: Partial<AddressFormData>;
     onSubmit: (data: AddressFormData) => void;
+    onFormChange?: () => void;
 };
 
 export function AddressForm({
     defaultValues,
     onSubmit,
+    onFormChange,
 }: AddressFormProps) {
 
     const {
@@ -36,7 +38,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.address_name}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.address_name?.message}</Text>
@@ -45,6 +46,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("address_name")}
+                        onChange={onFormChange}
                         placeholder="Give a name to this address"
                         type="text"
                     />
@@ -58,7 +60,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.address}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.address?.message}</Text>
@@ -67,6 +68,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("address")}
+                        onChange={onFormChange}
                         placeholder="Enter your address"
                         type="text"
                     />
@@ -80,7 +82,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.number}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.number?.message}</Text>
@@ -89,6 +90,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("number")}
+                        onChange={onFormChange}
                         placeholder="Enter your address number"
                         type="text"
                     />
@@ -102,7 +104,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.complement}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.complement?.message}</Text>
@@ -111,6 +112,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("complement")}
+                        onChange={onFormChange}
                         placeholder="Enter your address complement (Optional)"
                         type="text"
                     />
@@ -124,7 +126,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.district}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.district?.message}</Text>
@@ -133,6 +134,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("district")}
+                        onChange={onFormChange}
                         placeholder="Ex: Centro"
                         type="text"
                     />
@@ -146,7 +148,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.city}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.city?.message}</Text>
@@ -155,6 +156,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("city")}
+                        onChange={onFormChange}
                         placeholder="Ex: São Paulo"
                         type="text"
                     />
@@ -168,7 +170,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.state}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.state?.message}</Text>
@@ -177,6 +178,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("state")}
+                        onChange={onFormChange}
                         placeholder="Ex: SP"
                         type="text"
                     />
@@ -190,7 +192,6 @@ export function AddressForm({
                         </Text>
                     </Form.Label>
                     <Form.Message
-                        // match={() => !!errors.zip_code}
                         style={{ color: "var(--red-10)" }}
                     >
                         <Text size="1">{errors.zip_code?.message}</Text>
@@ -199,6 +200,7 @@ export function AddressForm({
                 <Form.Control asChild>
                     <TextField.Root
                         {...register("zip_code")}
+                        onChange={onFormChange}
                         placeholder="Ex: XXXXX-XXX"
                         type="text"
                     />

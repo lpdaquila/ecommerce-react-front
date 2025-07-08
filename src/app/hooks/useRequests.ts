@@ -1,4 +1,5 @@
 
+import { ProfileAddress } from "../types/address";
 import { APIGetProfile, APIGetUser, APISignIn, Profile } from "../types/auth"
 import { useAPI } from "./useAPI"
 
@@ -35,6 +36,36 @@ async function deleteAccount(id: number) {
     return await useAPI(`auth/user/profile/${id}`, 'DELETE');
 }
 
+// CRUD Profile Address
+
+async function getAddresses() {
+    return await useAPI('auth/user/address/');
+}
+
+async function createAddress(
+    {
+        address_name,
+        address,
+        number,
+        complement,
+        district,
+        zip_code,
+        city,
+        state
+    }: ProfileAddress
+) {
+    return await useAPI<ProfileAddress>('auth/user/address/', 'POST', {
+        address_name,
+        address,
+        number,
+        complement,
+        district,
+        zip_code,
+        city,
+        state
+    })
+}
+
 
 export const useRequests = () => ({
     // Auth
@@ -49,4 +80,7 @@ export const useRequests = () => ({
     getProfile,
     editProfile,
     deleteAccount,
+
+    // Address
+    createAddress,
 })
