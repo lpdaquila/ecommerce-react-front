@@ -1,6 +1,9 @@
-import { Container, Text } from "@radix-ui/themes";
+import { Button, Container, Text } from "@radix-ui/themes";
+import { useNavigate } from "react-router";
 
 export function StoreLogo() {
+    const navigate = useNavigate();
+
     return (
         <Container
             maxWidth="100%"
@@ -9,7 +12,9 @@ export function StoreLogo() {
             position={{ md: "relative", lg: "absolute" }}
             display={{ initial: 'none', md: 'initial' }}
         >
-            <Text size="8">Your Store</Text>
+            <Button variant="ghost" onClick={() => navigate('/')}>
+                <Text size="8">Your Store</Text>
+            </Button>
         </Container>
     )
 }

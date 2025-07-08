@@ -7,6 +7,7 @@ import { MenuIcon } from "lucide-react";
 import { TopButtons } from "../../../top-buttons";
 import { ResponsiveCard } from "../../../ui/cards/responsive-card";
 import { ShoppingCartCard } from "../../../ui/cards/shopping-cart-card";
+import { StoreLogo } from "../../../ui/logos/store-logo";
 
 export default function Header() {
     const { toggleSidebar } = useContext(SidebarContext);
@@ -47,13 +48,11 @@ export default function Header() {
                 direction={{ sm: "column", lg: "row" }}
             >
                 <Container
-                    maxWidth="100%"
-                    mt="6"
-                    ml="4"
+                    width="300px"
                     position={{ md: "relative", lg: "absolute" }}
                     display={{ initial: 'none', md: 'initial' }}
                 >
-                    <Text size="8">Your Store</Text>
+                    <StoreLogo />
                 </Container>
                 <Container size="3" position="relative">
                     <SearchField />

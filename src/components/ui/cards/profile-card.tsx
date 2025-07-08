@@ -5,9 +5,10 @@ import { useAuth } from "../../../app/hooks/useAuth";
 import PrimaryButton from "../buttons/primary-button";
 import { ResponsiveCard } from "./responsive-card";
 import { useNavigate } from "react-router";
+import { ExitIcon, HeartFilledIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 export function ProfileCard() {
-    const { user } = useAuth();
+    const { user, handleSignOut } = useAuth();
 
     const navigate = useNavigate();
 
@@ -21,9 +22,13 @@ export function ProfileCard() {
                 <CircleUserRoundIcon size="17" />{user.user?.name}
             </SecondaryButton>}
         >
-            <Flex direction="column">
+            <Flex direction="column" gap="3">
                 <Text mb="2">Welcome, {user.user?.name}</Text>
-                <PrimaryButton
+                <SecondaryButton style={{ justifyContent: "start" }}>
+                    <HeartFilledIcon />Wishlist
+                </SecondaryButton>
+                <SecondaryButton
+                    style={{ justifyContent: "start" }}
                     onClick={() => {
                         if (user.user?.id !== undefined) {
                             handleManageProfile(user.user.id);
@@ -31,7 +36,13 @@ export function ProfileCard() {
                     }}
                     disabled={user.user?.id === undefined}
                 >
+                    <MixerHorizontalIcon />
                     Manage Profile
+                </SecondaryButton>
+                <PrimaryButton
+                    onClick={() => handleSignOut()}
+                    style={{ justifyContent: "start" }}
+                ><ExitIcon />Logout
                 </PrimaryButton>
             </Flex>
         </ResponsiveCard>

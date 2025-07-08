@@ -82,6 +82,8 @@ export function useAuth() {
     }
 
     function handleSignOut() {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        localStorage.removeItem(REFRESH_STORAGE_KEY);
         dispatch(setUser(null));
     }
 
