@@ -69,7 +69,7 @@ export default function ManageProfile() {
                         onEditProfile={() => setActiveView('edit')} profile={profile} id={Number(profile_id)}
                     />}
                     {activeView === 'edit' && profile && <EditProfileForm
-                        profile={profile} errorMsg={errorMsg} id={Number(profile_id)} />}
+                        profile={profile} id={Number(profile_id)} />}
                 </Container>
             </Flex>
         </Flex>

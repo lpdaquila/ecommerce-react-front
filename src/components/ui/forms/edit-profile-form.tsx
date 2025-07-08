@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useRequests } from "../../../app/hooks/useRequests";
 import { Profile } from "../../../app/types/auth";
 
-export function EditProfileForm({ id, profile, errorMsg }: { id: number, profile: Profile, errorMsg?: string }) {
+export function EditProfileForm({ id, profile }: { id: number, profile: Profile }) {
     const [apiError, setApiError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const [requestLoading, setRequestLoading] = useState(true);
@@ -16,10 +16,6 @@ export function EditProfileForm({ id, profile, errorMsg }: { id: number, profile
     const [email, setEmail] = useState(() => profile.email);
     const [document, setDocument] = useState(() => profile.document ?? '');
     const [phone, setPhone] = useState(() => profile.phone ?? '');
-
-    if (errorMsg) {
-        setApiError(errorMsg);
-    }
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
