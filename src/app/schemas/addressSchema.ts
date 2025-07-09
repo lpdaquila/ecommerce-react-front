@@ -13,7 +13,7 @@ export const addressSchema = z.object({
 
     number: z.
         string().
-        min(1, "Please give your address number").
+        min(1, "Please inform the address number").
         max(10, "Max 10 characters"),
 
     complement: z

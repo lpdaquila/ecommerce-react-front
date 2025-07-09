@@ -1,173 +1,129 @@
-import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import { Button, Callout, Card, Flex, Heading, Strong, Text, TextField } from "@radix-ui/themes";
+import { Button, Flex, Strong, TextField, Text } from "@radix-ui/themes";
 import { Form } from "radix-ui";
-import React, { useEffect, useState } from "react";
-import { useRequests } from "../../../app/hooks/useRequests";
-import { Profile } from "../../../app/types/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProfileFormData, profileSchema } from "../../../app/schemas/profileSchema";
 
-export function EditProfileForm({ id, profile }: { id: number, profile: Profile }) {
-    const [apiError, setApiError] = useState('');
-    const [successMsg, setSuccessMsg] = useState('');
-    const [requestLoading, setRequestLoading] = useState(true);
+type ProfileFormProps = {
+    defaultValues?: Partial<ProfileFormData>;
+    onSubmit: (data: ProfileFormData) => void;
+    onFormChange?: () => void;
+};
 
-    const { editProfile } = useRequests();
+export function ProfileForm({
+    defaultValues,
+    onSubmit,
+    onFormChange,
+}: ProfileFormProps) {
 
-    const [name, setName] = useState(() => profile.name);
-    const [email, setEmail] = useState(() => profile.email);
-    const [document, setDocument] = useState(() => profile.document ?? '');
-    const [phone, setPhone] = useState(() => profile.phone ?? '');
-
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-
-        setApiError('');
-
-        const body = Object.fromEntries(formData);
-
-        const response = await editProfile(
-            id, {
-            name: body.name?.toString(),
-            email: body.email?.toString(),
-            document: body.document?.toString(),
-            phone: body.phone?.toString(),
-        }
-        )
-
-        if (response.detail) {
-            setApiError(`${response.detail}`)
-            return;
-        }
-
-        setSuccessMsg("Changes saved successfuly")
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<ProfileFormData>({
+        resolver: zodResolver(profileSchema),
+        defaultValues,
+    });
 
     return (
-        <Card
-            mt="4"
-            style={{
-                maxWidth: "400px"
-            }}
+        <Form.Root
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ width: "300px" }}
         >
-            <Flex direction="column" justify="center" align="center">
-                <Heading
-                    style={{
-                        marginTop: "5%",
-                        marginBottom: "10%"
-                    }}
-                >
-                    Edit Profile
-                </Heading>
-                {apiError &&
-                    <Callout.Root mb="3" color="red">
-                        <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                        <Callout.Text>{apiError}</Callout.Text>
-                    </Callout.Root>
-                }
-                {successMsg &&
-                    <Callout.Root mb="3" color="green">
-                        <Callout.Icon><CheckCircledIcon /></Callout.Icon>
-                        <Callout.Text>{successMsg}</Callout.Text>
-                    </Callout.Root>
-                }
-                <Form.Root
-                    onSubmit={handleSubmit}
-                    style={{ width: "300px" }}
-                >
-                    <Form.Field style={{ marginBottom: "5%" }} name="name">
-                        <Flex gap="5" justify="between">
-                            <Form.Label >
-                                <Text size="2">
-                                    <Strong>Name</Strong>
-                                </Text>
-                            </Form.Label>
-                            <Form.Message
-                                match={(value, _formData) => value == ''}
-                                style={{ color: "var(--red-10)" }}
-                            >
-                                <Text size="1">Please enter your name</Text>
-                            </Form.Message>
-                        </Flex>
-                        <Form.Control asChild>
-                            <TextField.Root
-                                value={name ?? ''}
-                                onChange={(e) => { setName(e.target.value); setSuccessMsg(''); }}
-                                placeholder="Enter your name"
-                                type="text"
-                            />
-                        </Form.Control>
-                    </Form.Field>
-                    <Form.Field style={{ marginBottom: "5%" }} name="email">
-                        <Flex gap="5" justify="between">
-                            <Form.Label >
-                                <Text size="2">
-                                    <Strong>Email</Strong>
-                                </Text>
-                            </Form.Label>
-                            <Form.Message
-                                match={(value, _formData) => value == ''}
-                                style={{ color: "var(--red-10)" }}
-                            >
-                                <Text size="1">Please enter your email</Text>
-                            </Form.Message>
-                            <Form.Message
-                                match="typeMismatch"
-                                style={{ color: "var(--red-10)" }}
-                            >
-                                <Text size="1">Please provide a valid email</Text>
-                            </Form.Message>
-                        </Flex>
-                        <Form.Control asChild>
-                            <TextField.Root
-                                value={email ?? ''}
-                                onChange={(e) => { setEmail(e.target.value); setSuccessMsg(''); }}
-                                placeholder="Enter your email"
-                                type="email"
-                            />
-                        </Form.Control>
-                    </Form.Field>
-                    <Form.Field style={{ marginBottom: "5%" }} name="document">
-                        <Flex gap="5" justify="between">
-                            <Form.Label >
-                                <Text size="2">
-                                    <Strong>Document</Strong>
-                                </Text>
-                            </Form.Label>
-                        </Flex>
-                        <Form.Control asChild>
-                            <TextField.Root
-                                value={document ?? ''}
-                                onChange={(e) => { setDocument(e.target.value); setSuccessMsg(''); }}
-                                placeholder="XXX.XXX.XXX-XX"
-                                type="text"
-                            />
-                        </Form.Control>
-                    </Form.Field>
-                    <Form.Field style={{ marginBottom: "5%" }} name="phone">
-                        <Flex gap="5" justify="between">
-                            <Form.Label >
-                                <Text size="2">
-                                    <Strong>Phone</Strong>
-                                </Text>
-                            </Form.Label>
-                        </Flex>
-                        <Form.Control asChild>
-                            <TextField.Root
-                                value={phone ?? ''}
-                                onChange={(e) => { setPhone(e.target.value); setSuccessMsg(''); }}
-                                placeholder="(XX) XXXXX-XXXX"
-                                type="text"
-                            />
-                        </Form.Control>
-                    </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Name</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.name?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("name")}
+                        onChange={onFormChange}
+                        placeholder="Enter your name"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Email</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.email?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("email")}
+                        onChange={onFormChange}
+                        placeholder="Enter your email"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Document</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.document?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("document")}
+                        onChange={onFormChange}
+                        placeholder="XXX.XXX.XXX-XX"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Phone</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.phone?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("phone")}
+                        onChange={onFormChange}
+                        placeholder="(XX) XXXXX-XXXX"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
 
-                    <Form.Submit>
-                        <Button mt="5" mb="2" style={{ width: "300px" }} asChild>
-                            <Text>Submit</Text>
-                        </Button>
-                    </Form.Submit>
-                </Form.Root>
-            </Flex>
-        </Card>
+            <Form.Submit>
+                <Button mt="5" mb="2" style={{ width: "300px" }} asChild>
+                    <Text>Submit</Text>
+                </Button>
+            </Form.Submit>
+        </Form.Root>
     )
 }

@@ -2,13 +2,13 @@ import { Button, Card, Container, Flex, Separator } from "@radix-ui/themes";
 import { Header } from "../components/layouts/public-layout/headers/user-header";
 import { useNavigate, useParams } from "react-router";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
-import { EditProfileForm } from "../components/ui/forms/edit-profile-form";
 import { HomeIcon, InfoCircledIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { AccountInfoCard } from "../components/ui/cards/account-info-card";
 import { useRequests } from "../app/hooks/useRequests";
 import { Profile } from "../app/types/auth";
 import { AddAddressCard } from "../components/ui/cards/create-address-card";
+import { EditProfileCard } from "../components/ui/cards/edit-profile-card";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -74,7 +74,7 @@ export default function ManageProfile() {
                     {activeView === 'profile' && profile && <AccountInfoCard
                         onEditProfile={() => setActiveView('edit')} profile={profile} id={Number(profile_id)}
                     />}
-                    {activeView === 'edit' && profile && <EditProfileForm
+                    {activeView === 'edit' && profile && <EditProfileCard
                         profile={profile} id={Number(profile_id)} />}
                     {activeView === 'addresses' && <AddAddressCard />}
                 </Container>
