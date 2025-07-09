@@ -4,11 +4,11 @@ import { useNavigate, useParams } from "react-router";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import { HomeIcon, InfoCircledIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { AccountInfoCard } from "../components/ui/cards/account-info-card";
+import { ProfileInfoHandler } from "../components/handlers/profile-info-handler";
 import { useRequests } from "../app/hooks/useRequests";
 import { Profile } from "../app/types/auth";
-import { AddAddressCard } from "../components/ui/cards/create-address-card";
-import { EditProfileCard } from "../components/ui/cards/edit-profile-card";
+import { CreateAddressHadler } from "../components/handlers/create-address-handler";
+import { EditProfileHandler } from "../components/handlers/edit-profile-hadler";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -49,14 +49,14 @@ export default function ManageProfile() {
             <Header />
             <Flex direction="row">
                 <Sidebar>
-                    <Card>
+                    <Card mr="4">
                         <Button
                             onClick={() => setActiveView('profile')}
                             mt="3"
                             mb="3"
                             variant="ghost"
                         >
-                            <InfoCircledIcon />Account Info
+                            <InfoCircledIcon />Profile Info
                         </Button>
                         <Separator size="4" />
                         <Button
@@ -71,12 +71,19 @@ export default function ManageProfile() {
                     </Card>
                 </Sidebar>
                 <Container>
-                    {activeView === 'profile' && profile && <AccountInfoCard
-                        onEditProfile={() => setActiveView('edit')} profile={profile} id={Number(profile_id)}
-                    />}
-                    {activeView === 'edit' && profile && <EditProfileCard
-                        profile={profile} id={Number(profile_id)} />}
-                    {activeView === 'addresses' && <AddAddressCard />}
+                    <Card
+                        mt="4"
+                        style={{
+                            maxWidth: "400px"
+                        }}
+                    >
+                        {activeView === 'profile' && profile && <ProfileInfoHandler
+                            onEditProfile={() => setActiveView('edit')} profile={profile} id={Number(profile_id)}
+                        />}
+                        {activeView === 'edit' && profile && <EditProfileHandler
+                            profile={profile} id={Number(profile_id)} />}
+                        {activeView === 'addresses' && <CreateAddressHadler />}
+                    </Card>
                 </Container>
             </Flex>
         </Flex>

@@ -3,11 +3,13 @@ import z from "zod";
 export const profileSchema = z.object({
     name: z
         .string()
+        .min(1, "Name cannot be empty")
         .min(3, "Name must have at least 3 characters")
         .max(100, "Max 100 characters"),
 
     email: z
         .string()
+        .min(1, "Email cannot be empty")
         .email("Please give a valid email"),
 
     document: z

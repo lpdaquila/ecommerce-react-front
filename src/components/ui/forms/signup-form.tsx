@@ -1,190 +1,120 @@
-import { Button, Callout, Flex, Heading, Strong, Text, TextField } from "@radix-ui/themes";
-import * as Form from "@radix-ui/react-form";
-import { useRef, useState } from "react";
-import { useAuth } from "../../../app/hooks/useAuth";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { useNavigate } from "react-router";
+import { Button, Flex, Strong, TextField, Text } from "@radix-ui/themes";
+import { Form } from "radix-ui";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignUpFormData, signupSchema } from "../../../app/schemas/signupSchema";
 
-export function SignUpForm() {
-    const passwordRef = useRef<HTMLInputElement>(null);
-    const confirmRef = useRef<HTMLInputElement>(null);
+type SignUpFormProps = {
+    onSubmit: (data: SignUpFormData) => void;
+};
 
-    const navigate = useNavigate();
+export function SignUpForm({
+    onSubmit,
+}: SignUpFormProps) {
 
-    const { handleSignUp } = useAuth();
-
-    const [apiError, setApiError] = useState('');
-
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-
-        setApiError('');
-
-        const body = Object.fromEntries(
-            [...formData.entries()].filter(([key]) => !['pswrd-confirm'].includes(key))
-        );
-
-        const response = await handleSignUp(
-            body.name as string,
-            body.email as string,
-            body.password as string
-        )
-
-        if (response.detail) {
-            setApiError(`${response.detail}`)
-            return;
-        }
-
-        navigate('/')
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<SignUpFormData>({
+        resolver: zodResolver(signupSchema),
+    });
 
     return (
-        <>
-            <Heading
-                style={{
-                    marginBottom: "10%"
-                }}
-            >
-                Create an account
-            </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>
-            }
-            <Form.Root
-                onSubmit={handleSubmit}
-                style={{ width: "300px" }}
-            >
-                <Form.Field
-                    style={{
-                        marginBottom: "5%"
-                    }}
-                    name="name"
-                >
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Your Name</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{
-                                color: "var(--red-10)"
-                            }}
-                        >
-                            <Text size="1">Please enter your name</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            placeholder="Enter your name"
-                            type="text"
-                            required
-                        />
-                    </Form.Control>
-                </Form.Field>
-                <Form.Field
-                    style={{
-                        marginBottom: "5%"
-                    }}
-                    name="email"
-                >
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Email</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Please enter your email</Text>
-                        </Form.Message>
-                        <Form.Message
-                            match="typeMismatch"
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Please provide a valid email</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            placeholder="Enter your email"
-                            type="email"
-                            required
-                        />
-                    </Form.Control>
-                </Form.Field>
-                <Form.Field style={{ marginBottom: "5%" }} name="password">
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Password</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Please give a password</Text>
-                        </Form.Message>
-                        <Form.Message
-                            match={(value, formData) => value !== formData.get("pswrd-confirm")}
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Passwords don't match</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            ref={passwordRef}
-                            placeholder="Enter your password"
-                            type="password"
-                            required
-                        />
-                    </Form.Control>
-                </Form.Field>
-                <Form.Field style={{ marginBottom: "5%" }} name="pswrd-confirm">
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Confirm Password</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Confirm your password</Text>
-                        </Form.Message>
-                        <Form.Message
-                            match={(value, formData) => value !== formData.get("password")}
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Passwords don't match</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            ref={confirmRef}
-                            placeholder="Confirm your password"
-                            type="password"
-                            required
-                        />
-                    </Form.Control>
-                </Form.Field>
+        <Form.Root
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ width: "300px" }}
+        >
+            <Form.Field style={{ marginBottom: "5%" }} name="name">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Name</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.name?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("name")}
+                        placeholder="Enter your name"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="email">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Email</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.email?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("email")}
+                        placeholder="Enter your email"
+                        type="email"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="password">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Password</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.password?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("password")}
+                        placeholder="Give a password"
+                        type="password"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="confirm">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Confirm Password</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.confirm?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("confirm")}
+                        placeholder="Confirm password"
+                        type="password"
+                    />
+                </Form.Control>
+            </Form.Field>
 
-                <Form.Submit>
-                    <Button style={{ width: "300px" }} asChild>
-                        <Text>Create account</Text>
-                    </Button>
-                </Form.Submit>
-            </Form.Root>
-        </>
+            <Form.Submit>
+                <Button mt="5" mb="2" style={{ width: "300px" }} asChild>
+                    <Text>Create Account</Text>
+                </Button>
+            </Form.Submit>
+        </Form.Root>
     )
 }

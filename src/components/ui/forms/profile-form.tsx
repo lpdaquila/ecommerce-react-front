@@ -30,7 +30,7 @@ export function ProfileForm({
             onSubmit={handleSubmit(onSubmit)}
             style={{ width: "300px" }}
         >
-            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+            <Form.Field style={{ marginBottom: "5%" }} name="name">
                 <Flex gap="5" justify="between">
                     <Form.Label >
                         <Text size="2">
@@ -52,7 +52,7 @@ export function ProfileForm({
                     />
                 </Form.Control>
             </Form.Field>
-            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+            <Form.Field style={{ marginBottom: "5%" }} name="email">
                 <Flex gap="5" justify="between">
                     <Form.Label >
                         <Text size="2">
@@ -70,11 +70,11 @@ export function ProfileForm({
                         {...register("email")}
                         onChange={onFormChange}
                         placeholder="Enter your email"
-                        type="text"
+                        type="email"
                     />
                 </Form.Control>
             </Form.Field>
-            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+            <Form.Field style={{ marginBottom: "5%" }} name="document">
                 <Flex gap="5" justify="between">
                     <Form.Label >
                         <Text size="2">
@@ -96,7 +96,7 @@ export function ProfileForm({
                     />
                 </Form.Control>
             </Form.Field>
-            <Form.Field style={{ marginBottom: "5%" }} name="address_name">
+            <Form.Field style={{ marginBottom: "5%" }} name="phone">
                 <Flex gap="5" justify="between">
                     <Form.Label >
                         <Text size="2">

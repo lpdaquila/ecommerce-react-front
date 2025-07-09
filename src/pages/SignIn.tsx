@@ -1,9 +1,9 @@
 import { Box, Card, Container, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { SecondaryButton } from "../components/ui/buttons/secondary-button";
-import { AuthForm } from "../components/ui/forms/auth-form";
-import { SignUpForm } from "../components/ui/forms/signup-form";
 import { Header } from "../components/layouts/public-layout/headers/user-header";
+import { AuthHandler } from "../components/handlers/auth-handler";
+import { SignUpHandler } from "../components/handlers/signup-handler";
 
 export default function SignIn() {
     const [isAuthForm, setIsAuthForm] = useState(true);
@@ -43,7 +43,7 @@ export default function SignIn() {
                         }}
                     >
                         {
-                            isAuthForm ? <AuthForm /> : <SignUpForm />
+                            isAuthForm ? <AuthHandler /> : <SignUpHandler />
                         }
 
                         <Flex direction="column" gap="3" mt="3">

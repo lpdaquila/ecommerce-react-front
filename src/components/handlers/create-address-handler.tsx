@@ -1,11 +1,11 @@
-import { Callout, Card, Heading } from "@radix-ui/themes";
+import { Callout, Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import { AddressForm } from "../forms/address-form";
-import { AddressFormData } from "../../../app/schemas/addressSchema";
-import { useRequests } from "../../../app/hooks/useRequests";
+import { AddressForm } from "../ui/forms/address-form";
+import { AddressFormData } from "../../app/schemas/addressSchema";
+import { useRequests } from "../../app/hooks/useRequests";
 
-export function AddAddressCard() {
+export function CreateAddressHadler() {
 
     const { createAddress } = useRequests();
 
@@ -26,12 +26,8 @@ export function AddAddressCard() {
     }
 
     return (
-        <Card>
-            <Heading
-                style={{
-                    marginBottom: "10%"
-                }}
-            >
+        <Flex direction="column" gap="2" align="center">
+            <Heading>
                 Add an address
             </Heading>
             {apiError &&
@@ -46,6 +42,6 @@ export function AddAddressCard() {
                 </Callout.Root>
             }
             <AddressForm onFormChange={() => setSuccessMsg('')} onSubmit={handleSubmit} />
-        </Card>
+        </Flex>
     )
 }

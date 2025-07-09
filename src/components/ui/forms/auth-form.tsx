@@ -1,125 +1,79 @@
-import { Button, Callout, Flex, Heading, Link, Strong, Text, TextField } from "@radix-ui/themes";
-import * as Form from "@radix-ui/react-form";
-import { useState } from "react";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
-import { useAuth } from "../../../app/hooks/useAuth";
-import { useNavigate } from "react-router";
+import { Button, Flex, Strong, TextField, Text } from "@radix-ui/themes";
+import { Form } from "radix-ui";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthFormData, authSchema } from "../../../app/schemas/authSchema";
 
-export function AuthForm() {
-    const [apiError, setApiError] = useState('');
+type AuthFormProps = {
+    // defaultValues?: Partial<AuthFormData>;
+    onSubmit: (data: AuthFormData) => void;
+};
 
-    const { handleSignIn } = useAuth();
+export function AuthForm({
+    onSubmit,
+}: AuthFormProps) {
 
-    const navigate = useNavigate();
-
-    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-        setApiError('');
-
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const body = Object.fromEntries(formData);
-
-        const response = await handleSignIn(
-            body.email as string,
-            body.password as string
-        );
-
-        if (response.detail) {
-            setApiError(`${response.detail}`);
-            return;
-        }
-
-        console.log(response.data);
-        navigate('/')
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<AuthFormData>({
+        resolver: zodResolver(authSchema),
+    });
 
     return (
-        <>
-            <Heading
-                style={{
-                    marginBottom: "10%"
-                }}
-            >
-                Login
-            </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>
-            }
-            <Form.Root
-                onSubmit={handleSubmit}
-                style={{ width: "300px" }}
-            >
-                <Form.Field style={{ marginBottom: "5%" }} name="email">
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Email</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{
-                                color: "var(--red-10)"
-                            }}
-                        >
-                            <Text size="1">Please enter your email</Text>
-                        </Form.Message>
-                        <Form.Message
-                            match="typeMismatch"
-                            style={{
-                                color: "var(--red-10)"
-                            }}
-                        >
-                            <Text size="1">Please provide a valid email</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            placeholder="Enter your email"
-                            type="email"
-                            required
-                        />
-                    </Form.Control>
-                </Form.Field>
-                <Form.Field style={{ marginBottom: "5%" }} name="password">
-                    <Flex gap="5" justify="between">
-                        <Form.Label >
-                            <Text size="2">
-                                <Strong>Password</Strong>
-                            </Text>
-                        </Form.Label>
-                        <Form.Message
-                            match="valueMissing"
-                            style={{ color: "var(--red-10)" }}
-                        >
-                            <Text size="1">Please give a password</Text>
-                        </Form.Message>
-                    </Flex>
-                    <Form.Control asChild>
-                        <TextField.Root
-                            placeholder="Enter your password"
-                            type="password"
-                            required
-                        />
-                    </Form.Control>
-                    <Flex direction="column" align="end">
-                        <Link style={{ color: "var(--accent-8)" }} href="/">
-                            <Text size="1">
-                                Forgot your password ?
-                            </Text>
-                        </Link>
-                    </Flex>
-                </Form.Field>
+        <Form.Root
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ width: "300px" }}
+        >
+            <Form.Field style={{ marginBottom: "5%" }} name="email">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Email</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.email?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("email")}
+                        placeholder="Enter your email"
+                        type="text"
+                    />
+                </Form.Control>
+            </Form.Field>
+            <Form.Field style={{ marginBottom: "5%" }} name="password">
+                <Flex gap="5" justify="between">
+                    <Form.Label >
+                        <Text size="2">
+                            <Strong>Password</Strong>
+                        </Text>
+                    </Form.Label>
+                    <Form.Message
+                        style={{ color: "var(--red-10)" }}
+                    >
+                        <Text size="1">{errors.password?.message}</Text>
+                    </Form.Message>
+                </Flex>
+                <Form.Control asChild>
+                    <TextField.Root
+                        {...register("password")}
+                        placeholder="Enter your password"
+                        type="password"
+                    />
+                </Form.Control>
+            </Form.Field>
 
-                <Form.Submit>
-                    <Button style={{ width: "300px" }} asChild>
-                        <Text>Login</Text>
-                    </Button>
-                </Form.Submit>
-            </Form.Root>
-        </>
+            <Form.Submit>
+                <Button mt="5" mb="2" style={{ width: "300px" }} asChild>
+                    <Text>Login</Text>
+                </Button>
+            </Form.Submit>
+        </Form.Root>
     )
 }
