@@ -31,7 +31,7 @@ export function AddressForm({
             style={{ width: "300px" }}
         >
             <Form.Field style={{ marginBottom: "5%" }} name="address_name">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>Name*</Strong>
@@ -52,52 +52,56 @@ export function AddressForm({
                     />
                 </Form.Control>
             </Form.Field>
-            <Form.Field style={{ marginBottom: "5%" }} name="address">
-                <Flex gap="5" justify="between">
-                    <Form.Label >
-                        <Text size="2">
-                            <Strong>Address*</Strong>
-                        </Text>
-                    </Form.Label>
-                    <Form.Message
-                        style={{ color: "var(--red-10)" }}
-                    >
-                        <Text size="1">{errors.address?.message}</Text>
-                    </Form.Message>
-                </Flex>
-                <Form.Control asChild>
-                    <TextField.Root
-                        {...register("address")}
-                        onChange={onFormChange}
-                        placeholder="Enter your address"
-                        type="text"
-                    />
-                </Form.Control>
-            </Form.Field>
-            <Form.Field style={{ marginBottom: "5%" }} name="number">
-                <Flex gap="5" justify="between">
-                    <Form.Label >
-                        <Text size="2">
-                            <Strong>Number*</Strong>
-                        </Text>
-                    </Form.Label>
-                    <Form.Message
-                        style={{ color: "var(--red-10)" }}
-                    >
-                        <Text size="1">{errors.number?.message}</Text>
-                    </Form.Message>
-                </Flex>
-                <Form.Control asChild>
-                    <TextField.Root
-                        {...register("number")}
-                        onChange={onFormChange}
-                        placeholder="Enter your address number"
-                        type="text"
-                    />
-                </Form.Control>
-            </Form.Field>
+            <Flex gap="2">
+                <Form.Field style={{ marginBottom: "5%" }} name="address">
+                    <Flex justify="between" direction="column">
+                        <Form.Label >
+                            <Text size="2">
+                                <Strong>Street*</Strong>
+                            </Text>
+                        </Form.Label>
+                        <Form.Message
+                            style={{ color: "var(--red-10)" }}
+                        >
+                            <Text size="1">{errors.address?.message}</Text>
+                        </Form.Message>
+                    </Flex>
+                    <Form.Control asChild>
+                        <TextField.Root
+                            {...register("address")}
+                            style={{ width: "180px" }}
+                            onChange={onFormChange}
+                            placeholder="Ex: Flawless St."
+                            type="text"
+                        />
+                    </Form.Control>
+                </Form.Field>
+                <Form.Field style={{ marginBottom: "5%" }} name="number">
+                    <Flex justify="between" direction="column">
+                        <Form.Label >
+                            <Text size="2">
+                                <Strong>Number*</Strong>
+                            </Text>
+                        </Form.Label>
+                        <Form.Message
+                            style={{ color: "var(--red-10)" }}
+                        >
+                            <Text size="1">{errors.number?.message}</Text>
+                        </Form.Message>
+                    </Flex>
+                    <Form.Control asChild>
+                        <TextField.Root
+                            style={{ maxWidth: "100px" }}
+                            {...register("number")}
+                            onChange={onFormChange}
+                            placeholder="Ex: 234"
+                            type="text"
+                        />
+                    </Form.Control>
+                </Form.Field>
+            </Flex>
             <Form.Field style={{ marginBottom: "5%" }} name="complement">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>Complement</Strong>
@@ -119,7 +123,7 @@ export function AddressForm({
                 </Form.Control>
             </Form.Field>
             <Form.Field style={{ marginBottom: "5%" }} name="district">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>District*</Strong>
@@ -135,13 +139,13 @@ export function AddressForm({
                     <TextField.Root
                         {...register("district")}
                         onChange={onFormChange}
-                        placeholder="Ex: Centro"
+                        placeholder="Ex: CDB"
                         type="text"
                     />
                 </Form.Control>
             </Form.Field>
             <Form.Field style={{ marginBottom: "5%" }} name="city">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>City*</Strong>
@@ -157,13 +161,13 @@ export function AddressForm({
                     <TextField.Root
                         {...register("city")}
                         onChange={onFormChange}
-                        placeholder="Ex: São Paulo"
+                        placeholder="Ex: Perth"
                         type="text"
                     />
                 </Form.Control>
             </Form.Field>
             <Form.Field style={{ marginBottom: "5%" }} name="state">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>State*</Strong>
@@ -179,13 +183,13 @@ export function AddressForm({
                     <TextField.Root
                         {...register("state")}
                         onChange={onFormChange}
-                        placeholder="Ex: SP"
+                        placeholder="Ex: WA"
                         type="text"
                     />
                 </Form.Control>
             </Form.Field>
             <Form.Field style={{ marginBottom: "5%" }} name="zip_code">
-                <Flex gap="5" justify="between">
+                <Flex justify="between" direction="column">
                     <Form.Label >
                         <Text size="2">
                             <Strong>Zip code*</Strong>

@@ -1,4 +1,4 @@
-export type ProfileAddress = {
+export type AddressInfo = {
     address_name: string;
     address: string;
     number: string;
@@ -8,3 +8,10 @@ export type ProfileAddress = {
     city: string;
     state: string;
 }
+
+export type ProfileAddress = AddressInfo & { id: number };
+
+export type APIGetAdresses = {
+    addresses: ProfileAddress;
+}
+

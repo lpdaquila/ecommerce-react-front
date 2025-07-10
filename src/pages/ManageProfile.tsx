@@ -7,19 +7,24 @@ import { useEffect, useState } from "react";
 import { ProfileInfoHandler } from "../components/handlers/profile-info-handler";
 import { useRequests } from "../app/hooks/useRequests";
 import { Profile } from "../app/types/auth";
-import { CreateAddressHadler } from "../components/handlers/create-address-handler";
 import { EditProfileHandler } from "../components/handlers/edit-profile-hadler";
+import { ProfileAddress } from "../app/types/address";
+import { ManageAddressHandler } from "../components/handlers/manage-address-handler";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
 export default function ManageProfile() {
     const { id: profile_id } = useParams();
 
-    const [errorMsg, setErrorMsg] = useState('');
+    const [apiError, setApiError] = useState('');
     const [activeView, setActiveView] = useState<View>('profile')
-    const [profile, setProfile] = useState<Profile | null>(null);
 
-    const { getProfile } = useRequests();
+    const [profile, setProfile] = useState<Profile | null>(null);
+    const [addressList, setAddressList] = useState<ProfileAddress[]>([]);
+
+    const [refreshAddress, setRefreshAddress] = useState(false);
+
+    const { getProfile, getAddresses } = useRequests();
 
     const navigate = useNavigate();
 
@@ -30,19 +35,46 @@ export default function ManageProfile() {
             if (response.detail === "Authentication credentials were not provided.") {
                 navigate('/signin')
             }
-            setErrorMsg(response.detail)
+            setApiError(response.detail)
             return;
         }
 
         if (response.data) {
-            console.log('chegou', response.data.profile)
             setProfile(response.data.profile)
         }
     }
 
+    async function handleGetAdresses() {
+        setApiError('');
+
+        const response = await getAddresses();
+
+        if (response.detail) {
+            setApiError(response.detail);
+            return [];
+        }
+
+        const addressesList = Array.isArray(response.data?.addresses)
+            ? response.data.addresses
+            : [];
+        return addressesList;
+    }
+
+    async function fetchAddresses() {
+        const data = await handleGetAdresses();
+        if (data && Array.isArray(data)) {
+            setAddressList(data);
+        }
+    }
+
     useEffect(() => {
-        handleGetProfile(Number(profile_id))
+        handleGetProfile(Number(profile_id));
+        fetchAddresses();
     }, [profile_id])
+
+    useEffect(() => {
+        fetchAddresses();
+    }, [refreshAddress])
 
     return (
         <Flex direction="column" position="relative">
@@ -82,7 +114,11 @@ export default function ManageProfile() {
                         />}
                         {activeView === 'edit' && profile && <EditProfileHandler
                             profile={profile} id={Number(profile_id)} />}
-                        {activeView === 'addresses' && <CreateAddressHadler />}
+                        {activeView === 'addresses' &&
+                            <ManageAddressHandler
+                                onRefresh={() => setRefreshAddress(!refreshAddress)}
+                                addressList={addressList}
+                            />}
                     </Card>
                 </Container>
             </Flex>
