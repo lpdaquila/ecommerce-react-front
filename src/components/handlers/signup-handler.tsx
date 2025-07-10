@@ -5,6 +5,7 @@ import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
 import { SignUpFormData } from "../../app/schemas/signupSchema";
 import { SignUpForm } from "../ui/forms/signup-form";
+import { ErrorCallout } from "../ui/callouts/error-callout";
 
 export function SignUpHandler() {
     const navigate = useNavigate();
@@ -39,12 +40,7 @@ export function SignUpHandler() {
             >
                 Create an account
             </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>
-            }
+            {apiError && <ErrorCallout msg={apiError} />}
             <SignUpForm onSubmit={handleSubmit} />
         </>
     )

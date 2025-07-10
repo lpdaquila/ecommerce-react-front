@@ -1,10 +1,11 @@
-import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
-import { Callout, Flex, Heading } from "@radix-ui/themes";
+import { Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { Profile } from "../../app/types/auth";
 import { useRequests } from "../../app/hooks/useRequests";
 import { ProfileFormData } from "../../app/schemas/profileSchema";
 import { ProfileForm } from "../ui/forms/profile-form";
+import { SuccessCallout } from "../ui/callouts/success-callout";
+import { ErrorCallout } from "../ui/callouts/error-callout";
 
 export function EditProfileHandler({ id, profile }: { id: number, profile: Profile }) {
     const [apiError, setApiError] = useState('');
@@ -40,18 +41,8 @@ export function EditProfileHandler({ id, profile }: { id: number, profile: Profi
             >
                 Edit Profile
             </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>
-            }
-            {successMsg &&
-                <Callout.Root mb="3" color="green">
-                    <Callout.Icon><CheckCircledIcon /></Callout.Icon>
-                    <Callout.Text>{successMsg}</Callout.Text>
-                </Callout.Root>
-            }
+            {apiError && <ErrorCallout msg={apiError} />}
+            {successMsg && <SuccessCallout msg={successMsg} />}
             <ProfileForm
                 onFormChange={() => setSuccessMsg('')}
                 defaultValues={profile}

@@ -1,4 +1,5 @@
 
+import { fetchWithAuth } from "../middlewares/fetchWithAuth";
 import { AddressInfo, APIGetAdresses, ProfileAddress } from "../types/address";
 import { APIGetProfile, APIGetUser, APISignIn, Profile } from "../types/auth"
 import { useAPI } from "./useAPI"
@@ -100,6 +101,10 @@ async function editAddress(
     })
 }
 
+async function deleteAddress(id: number) {
+    return await useAPI(`auth/user/address/${id}`, 'DELETE')
+}
+
 export const useRequests = () => ({
     // Auth
     signIn,
@@ -118,4 +123,5 @@ export const useRequests = () => ({
     createAddress,
     getAddresses,
     editAddress,
+    deleteAddress,
 })

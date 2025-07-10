@@ -1,20 +1,21 @@
-import { Callout, Flex, Heading } from "@radix-ui/themes";
+import { Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
-import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import { AddressForm } from "../ui/forms/address-form";
 import { AddressFormData } from "../../app/schemas/addressSchema";
 import { useRequests } from "../../app/hooks/useRequests";
 import { ProfileAddress } from "../../app/types/address";
+import { SuccessCallout } from "../ui/callouts/success-callout";
+import { ErrorCallout } from "../ui/callouts/error-callout";
 
 export function EditAddressHadler(
     {
         id,
         address,
-        onSubmit
+        onSuccess
     }: {
         id: number,
         address: ProfileAddress,
-        onSubmit?: () => void
+        onSuccess: () => void
     }) {
 
     const { editAddress } = useRequests();
@@ -32,11 +33,8 @@ export function EditAddressHadler(
             return;
         }
 
-        if (onSubmit) {
-            console.log('submited')
-            onSubmit();
-        }
-        setSuccessMsg("Changes saved successfully")
+        onSuccess();
+        setSuccessMsg("Changes saved successfully");
     }
 
     return (
@@ -44,17 +42,8 @@ export function EditAddressHadler(
             <Heading>
                 Edit Address
             </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>}
-            {successMsg &&
-                <Callout.Root mb="3" color="green">
-                    <Callout.Icon><CheckCircledIcon /></Callout.Icon>
-                    <Callout.Text>{successMsg}</Callout.Text>
-                </Callout.Root>
-            }
+            {apiError && <ErrorCallout msg={apiError} />}
+            {successMsg && <SuccessCallout msg={successMsg} />}
             <AddressForm
                 onFormChange={() => setSuccessMsg('')}
                 defaultValues={address}

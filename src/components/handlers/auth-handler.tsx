@@ -1,10 +1,10 @@
-import { Callout, Heading } from "@radix-ui/themes";
+import { Heading } from "@radix-ui/themes";
 import { useState } from "react";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { useAuth } from "../../app/hooks/useAuth";
 import { useNavigate } from "react-router";
 import { AuthForm } from "../ui/forms/auth-form";
 import { AuthFormData } from "../../app/schemas/authSchema";
+import { ErrorCallout } from "../ui/callouts/error-callout";
 
 export function AuthHandler() {
     const [apiError, setApiError] = useState('');
@@ -38,12 +38,7 @@ export function AuthHandler() {
             >
                 Login
             </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>
-            }
+            {apiError && <ErrorCallout msg={apiError} />}
             <AuthForm onSubmit={handleSubmit} />
         </>
     )

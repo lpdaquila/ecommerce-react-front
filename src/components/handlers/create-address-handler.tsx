@@ -1,13 +1,17 @@
-import { Callout, Flex, Heading } from "@radix-ui/themes";
+import { Flex, Heading } from "@radix-ui/themes";
 import { useState } from "react";
-import { CheckCircledIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 import { AddressForm } from "../ui/forms/address-form";
 import { AddressFormData } from "../../app/schemas/addressSchema";
 import { useRequests } from "../../app/hooks/useRequests";
+import { SuccessCallout } from "../ui/callouts/success-callout";
+import { ErrorCallout } from "../ui/callouts/error-callout";
+import { useAuth } from "../../app/hooks/useAuth";
 
-export function CreateAddressHadler() {
+export function CreateAddressHadler({ onSuccess }: { onSuccess: () => void }) {
 
     const { createAddress } = useRequests();
+
+    const { handleInitUser } = useAuth();
 
     const [apiError, setApiError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
@@ -18,11 +22,15 @@ export function CreateAddressHadler() {
         const response = await createAddress(data)
 
         if (response.detail) {
+            if (response.detail.includes("Given token not valid")) {
+                await handleInitUser();
+            }
             setApiError(response.detail)
             return;
         }
 
-        setSuccessMsg("Address added successfully")
+        onSuccess();
+        setSuccessMsg("Address added successfully");
     }
 
     return (
@@ -30,17 +38,8 @@ export function CreateAddressHadler() {
             <Heading>
                 Add an address
             </Heading>
-            {apiError &&
-                <Callout.Root mb="3" color="red">
-                    <Callout.Icon><CrossCircledIcon /></Callout.Icon>
-                    <Callout.Text>{apiError}</Callout.Text>
-                </Callout.Root>}
-            {successMsg &&
-                <Callout.Root mb="3" color="green">
-                    <Callout.Icon><CheckCircledIcon /></Callout.Icon>
-                    <Callout.Text>{successMsg}</Callout.Text>
-                </Callout.Root>
-            }
+            {apiError && <ErrorCallout msg={apiError} />}
+            {successMsg && <SuccessCallout msg={successMsg} />}
             <AddressForm onFormChange={() => setSuccessMsg('')} onSubmit={handleSubmit} />
         </Flex>
     )
