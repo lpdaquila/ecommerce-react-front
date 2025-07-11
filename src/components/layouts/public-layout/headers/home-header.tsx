@@ -1,4 +1,4 @@
-import { Flex, IconButton, Container, Text, Separator, Link, Box } from "@radix-ui/themes";
+import { Flex, IconButton, Container, Separator, Link, Box } from "@radix-ui/themes";
 import { useContext } from "react";
 import { SidebarContext } from "../../../../contexts/sidebar-context";
 import SearchField from "../../../ui/fields/search-field";
@@ -47,13 +47,13 @@ export default function Header() {
                 position={{ initial: "relative", md: "sticky" }}
                 direction={{ sm: "column", lg: "row" }}
             >
-                <Container
-                    width="300px"
-                    position={{ md: "relative", lg: "absolute" }}
-                    display={{ initial: 'none', md: 'initial' }}
+                <Box
+                    width="100px"
+                    position={{ md: "relative", lg: "static" }}
+                    display={{ initial: 'none', md: 'block' }}
                 >
                     <StoreLogo />
-                </Container>
+                </Box>
                 <Container size="3" position="relative">
                     <SearchField />
                     <Flex

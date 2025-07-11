@@ -29,7 +29,7 @@ export function ProductCard() {
             </Inset>
             <Separator size="4" />
             <Text size="3" as="p" mt="2" mb="2">
-                <Link href="#">Prod description </Link>
+                <Link href="/product/asd">Prod description </Link>
             </Text>
             <Text size="6">
                 <Strong>$700.00</Strong>

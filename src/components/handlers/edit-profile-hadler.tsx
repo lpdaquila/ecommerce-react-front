@@ -6,14 +6,12 @@ import { ProfileFormData } from "../../app/schemas/profileSchema";
 import { ProfileForm } from "../ui/forms/profile-form";
 import { SuccessCallout } from "../ui/callouts/success-callout";
 import { ErrorCallout } from "../ui/callouts/error-callout";
-import { useRefreshToken } from "../../app/hooks/useRefreshToken";
 
 export function EditProfileHandler({ id, profile }: { id: number, profile: Profile }) {
     const [apiError, setApiError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
 
     const { editProfile } = useRequests();
-    const { handleNeedTokenRefresh } = useRefreshToken();
 
     const handleSubmit = async (data: ProfileFormData) => {
         setApiError('');
@@ -27,7 +25,6 @@ export function EditProfileHandler({ id, profile }: { id: number, profile: Profi
         })
 
         if (response.detail) {
-            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail);
             return;
         }

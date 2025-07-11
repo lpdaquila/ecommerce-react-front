@@ -10,7 +10,6 @@ import { Dialog } from "../ui/dialogs/alert-dialog";
 import { useRequests } from "../../app/hooks/useRequests";
 import { ErrorCallout } from "../ui/callouts/error-callout";
 import { SuccessCallout } from "../ui/callouts/success-callout";
-import { useRefreshToken } from "../../app/hooks/useRefreshToken";
 import { TurnBackBtn } from "../ui/buttons/turn-back-button";
 
 type View = 'view' | 'create' | 'edit'
@@ -28,14 +27,12 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
     const [successMsg, setSuccessMsg] = useState('');
 
     const { deleteAddress } = useRequests();
-    const { handleNeedTokenRefresh } = useRefreshToken();
 
     const handleDeleteAddress = async (id: number) => {
         setApiError('');
         const response = await deleteAddress(id);
 
         if (response.detail) {
-            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail);
             return;
         }
@@ -54,9 +51,17 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
         <>
             {activeView === 'view' &&
                 <>
-                    <Heading as="h3">Addresses</Heading>
+                    <Heading as="h2">Addresses</Heading>
                     <Text>Manage your delivery addresses</Text>
                     <Separator size="4" mb="3" />
+                    {addressList.length == 0 &&
+                        <Flex direction="column" gap="2">
+                            <Text>You haven't registered any address yet.</Text>
+                            <Text>Do you want to register an address ?</Text>
+                            <PrimaryButton onClick={() => setActiveView('create')}>
+                                <PlusIcon />Add an Address
+                            </PrimaryButton>
+                        </Flex>}
                     {addressList.length > 0 && selectedId &&
                         <Flex gap="2">
                             <Select.Root

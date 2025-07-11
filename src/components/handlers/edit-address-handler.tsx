@@ -6,7 +6,6 @@ import { useRequests } from "../../app/hooks/useRequests";
 import { ProfileAddress } from "../../app/types/address";
 import { SuccessCallout } from "../ui/callouts/success-callout";
 import { ErrorCallout } from "../ui/callouts/error-callout";
-import { useRefreshToken } from "../../app/hooks/useRefreshToken";
 
 export function EditAddressHadler(
     {
@@ -20,7 +19,6 @@ export function EditAddressHadler(
     }) {
 
     const { editAddress } = useRequests();
-    const { handleNeedTokenRefresh } = useRefreshToken();
 
     const [apiError, setApiError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
@@ -31,7 +29,6 @@ export function EditAddressHadler(
         const response = await editAddress(id, data)
 
         if (response.detail) {
-            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail)
             return;
         }

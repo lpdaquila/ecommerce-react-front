@@ -4,14 +4,12 @@ import { useParams } from "react-router";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import { HomeIcon, InfoCircledIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
-import { ProfileInfoHandler } from "../components/handlers/profile-info-handler";
 import { useRequests } from "../app/hooks/useRequests";
 import { Profile } from "../app/types/auth";
-import { EditProfileHandler } from "../components/handlers/edit-profile-hadler";
 import { ProfileAddress } from "../app/types/address";
 import { ManageAddressHandler } from "../components/handlers/manage-address-handler";
-import { useRefreshToken } from "../app/hooks/useRefreshToken";
 import { ManageProfileHandler } from "../components/handlers/manage-profile-handler";
+import { ErrorCallout } from "../components/ui/callouts/error-callout";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -27,13 +25,11 @@ export default function ManageProfile() {
     const [refreshAddress, setRefreshAddress] = useState(false);
 
     const { getProfile, getAddresses } = useRequests();
-    const { handleNeedTokenRefresh } = useRefreshToken();
 
     const handleGetProfile = async (id: number) => {
         const response = await getProfile(id)
 
         if (response.detail) {
-            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail)
             return;
         }
@@ -49,7 +45,6 @@ export default function ManageProfile() {
         const response = await getAddresses();
 
         if (response.detail) {
-            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail);
             return [];
         }
@@ -69,7 +64,6 @@ export default function ManageProfile() {
 
     useEffect(() => {
         handleGetProfile(Number(profile_id));
-        fetchAddresses();
     }, [profile_id])
 
     useEffect(() => {
@@ -109,6 +103,7 @@ export default function ManageProfile() {
                             maxWidth: "400px"
                         }}
                     >
+                        {apiError && <ErrorCallout msg={apiError} />}
                         {activeView === 'profile' && profile &&
                             <ManageProfileHandler
                                 id={Number(profile_id)}
