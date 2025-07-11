@@ -1,7 +1,6 @@
-import { Callout, Heading } from "@radix-ui/themes";
+import { Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import { useAuth } from "../../app/hooks/useAuth";
-import { CrossCircledIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router";
 import { SignUpFormData } from "../../app/schemas/signupSchema";
 import { SignUpForm } from "../ui/forms/signup-form";
@@ -14,7 +13,7 @@ export function SignUpHandler() {
 
     const [apiError, setApiError] = useState('');
 
-    async function handleSubmit(data: SignUpFormData) {
+    const handleSubmit = async (data: SignUpFormData) => {
         setApiError('');
 
         const response = await handleSignUp(
@@ -24,7 +23,7 @@ export function SignUpHandler() {
         )
 
         if (response.detail) {
-            setApiError(`${response.detail}`)
+            setApiError(response.detail);
             return;
         }
 

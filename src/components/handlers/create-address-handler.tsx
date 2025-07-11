@@ -5,26 +5,24 @@ import { AddressFormData } from "../../app/schemas/addressSchema";
 import { useRequests } from "../../app/hooks/useRequests";
 import { SuccessCallout } from "../ui/callouts/success-callout";
 import { ErrorCallout } from "../ui/callouts/error-callout";
-import { useAuth } from "../../app/hooks/useAuth";
+import { useRefreshToken } from "../../app/hooks/useRefreshToken";
 
 export function CreateAddressHadler({ onSuccess }: { onSuccess: () => void }) {
 
     const { createAddress } = useRequests();
 
-    const { handleInitUser } = useAuth();
+    const { handleNeedTokenRefresh } = useRefreshToken();
 
     const [apiError, setApiError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
 
-    async function handleSubmit(data: AddressFormData) {
+    const handleSubmit = async (data: AddressFormData) => {
         setApiError('');
 
         const response = await createAddress(data)
 
         if (response.detail) {
-            if (response.detail.includes("Given token not valid")) {
-                await handleInitUser();
-            }
+            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail)
             return;
         }

@@ -1,6 +1,6 @@
 import { Button, Card, Container, Flex, Separator } from "@radix-ui/themes";
 import { Header } from "../components/layouts/public-layout/headers/user-header";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import { HomeIcon, InfoCircledIcon, MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { Profile } from "../app/types/auth";
 import { EditProfileHandler } from "../components/handlers/edit-profile-hadler";
 import { ProfileAddress } from "../app/types/address";
 import { ManageAddressHandler } from "../components/handlers/manage-address-handler";
+import { useRefreshToken } from "../app/hooks/useRefreshToken";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -25,16 +26,13 @@ export default function ManageProfile() {
     const [refreshAddress, setRefreshAddress] = useState(false);
 
     const { getProfile, getAddresses } = useRequests();
+    const { handleNeedTokenRefresh } = useRefreshToken();
 
-    const navigate = useNavigate();
-
-    async function handleGetProfile(id: number) {
+    const handleGetProfile = async (id: number) => {
         const response = await getProfile(id)
 
         if (response.detail) {
-            if (response.detail === "Authentication credentials were not provided.") {
-                navigate('/signin')
-            }
+            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail)
             return;
         }
@@ -44,12 +42,13 @@ export default function ManageProfile() {
         }
     }
 
-    async function handleGetAdresses() {
+    const handleGetAdresses = async () => {
         setApiError('');
 
         const response = await getAddresses();
 
         if (response.detail) {
+            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail);
             return [];
         }
@@ -60,7 +59,7 @@ export default function ManageProfile() {
         return addressesList;
     }
 
-    async function fetchAddresses() {
+    const fetchAddresses = async () => {
         const data = await handleGetAdresses();
         if (data && Array.isArray(data)) {
             setAddressList(data);

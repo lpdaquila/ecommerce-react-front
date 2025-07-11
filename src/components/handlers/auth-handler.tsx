@@ -13,7 +13,7 @@ export function AuthHandler() {
 
     const navigate = useNavigate();
 
-    async function handleSubmit(data: AuthFormData) {
+    const handleSubmit = async (data: AuthFormData) => {
         setApiError('');
 
         const response = await handleSignIn(

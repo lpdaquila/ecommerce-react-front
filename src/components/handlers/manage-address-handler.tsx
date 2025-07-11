@@ -10,6 +10,7 @@ import { Dialog } from "../ui/dialogs/alert-dialog";
 import { useRequests } from "../../app/hooks/useRequests";
 import { ErrorCallout } from "../ui/callouts/error-callout";
 import { SuccessCallout } from "../ui/callouts/success-callout";
+import { useRefreshToken } from "../../app/hooks/useRefreshToken";
 
 type View = 'view' | 'create' | 'edit'
 
@@ -26,12 +27,14 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
     const [successMsg, setSuccessMsg] = useState('');
 
     const { deleteAddress } = useRequests();
+    const { handleNeedTokenRefresh } = useRefreshToken();
 
-    async function handleDeleteAddress(id: number) {
+    const handleDeleteAddress = async (id: number) => {
         setApiError('');
         const response = await deleteAddress(id);
 
         if (response.detail) {
+            handleNeedTokenRefresh(response.detail)
             setApiError(response.detail);
             return;
         }

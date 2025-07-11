@@ -1,49 +1,47 @@
-
-import { fetchWithAuth } from "../middlewares/fetchWithAuth";
-import { AddressInfo, APIGetAdresses, ProfileAddress } from "../types/address";
-import { APIGetProfile, APIGetUser, APISignIn, Profile } from "../types/auth"
+import { AddressInfo, APIGetAdresses, } from "../types/address";
+import { APIGetProfile, APIGetUser, APISignIn } from "../types/auth"
 import { useAPI } from "./useAPI"
 
-async function signIn({ email, password }: { email: string, password: string }) {
+const signIn = async ({ email, password }: { email: string, password: string }) => {
     return await useAPI<APISignIn>('auth/login/', 'POST', { email, password }, false);
 }
 
-async function signUp({ name, email, password }: { name: string, email: string, password: string }) {
+const signUp = async ({ name, email, password }: { name: string, email: string, password: string }) => {
     return await useAPI('auth/create_account/', 'POST', { name, email, password }, false);
 }
 
-async function getUser() {
+const getUser = async () => {
     return await useAPI<APIGetUser>('auth/user/');
 }
 
-async function refreshToken(refresh: string) {
+const refreshToken = async (refresh: string) => {
     return await useAPI('auth/refresh/', 'POST', { refresh }, false);
 }
 
 // CRUD Profile
 
-async function getProfile(id: number) {
+const getProfile = async (id: number) => {
     return await useAPI<APIGetProfile>(`auth/user/profile/${id}`)
 }
 
-async function editProfile(
+const editProfile = async (
     id: number,
     { name, email, document, phone }: { name?: string, email?: string, document?: string, phone?: string }
-) {
+) => {
     return await useAPI(`auth/user/profile/${id}`, 'PUT', { name, email, document, phone })
 }
 
-async function deleteAccount(id: number) {
+const deleteAccount = async (id: number) => {
     return await useAPI(`auth/user/profile/${id}`, 'DELETE');
 }
 
 // CRUD Profile Address
 
-async function getAddresses() {
+const getAddresses = async () => {
     return await useAPI<APIGetAdresses>('auth/user/address/');
 }
 
-async function createAddress(
+const createAddress = async (
     {
         address_name,
         address,
@@ -54,7 +52,7 @@ async function createAddress(
         city,
         state
     }: AddressInfo
-) {
+) => {
     return await useAPI<AddressInfo>('auth/user/address/', 'POST', {
         address_name,
         address,
@@ -67,7 +65,7 @@ async function createAddress(
     })
 }
 
-async function editAddress(
+const editAddress = async (
     id: number,
     {
         address_name,
@@ -88,7 +86,7 @@ async function editAddress(
         city?: string;
         state?: string;
     }
-) {
+) => {
     return await useAPI(`auth/user/address/${id}`, 'PUT', {
         address_name,
         address,
@@ -101,7 +99,7 @@ async function editAddress(
     })
 }
 
-async function deleteAddress(id: number) {
+const deleteAddress = async (id: number) => {
     return await useAPI(`auth/user/address/${id}`, 'DELETE')
 }
 

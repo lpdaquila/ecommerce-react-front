@@ -26,7 +26,7 @@ export function useAuth() {
         user: auth.user
     }
 
-    async function tryRefreshToken() {
+    const tryRefreshToken = async () => {
         const refresh = handleGetRefreshToken();
         if (!refresh) return false;
 
@@ -39,7 +39,7 @@ export function useAuth() {
         return false;
     }
 
-    async function handleInitUser() {
+    const handleInitUser = async () => {
         let access_token = handleGetAccessToken();
         if (!access_token) return;
 
@@ -59,7 +59,7 @@ export function useAuth() {
         }
     }
 
-    async function handleSignIn(email: string, password: string) {
+    const handleSignIn = async (email: string, password: string) => {
         const response = await signIn({ email, password });
 
         if (!response.detail && response.data) {
@@ -75,13 +75,13 @@ export function useAuth() {
         return response;
     }
 
-    async function handleSignUp(name: string, email: string, password: string) {
+    const handleSignUp = async (name: string, email: string, password: string) => {
         const response = await signUp({ name, email, password })
 
         return response;
     }
 
-    function handleSignOut() {
+    const handleSignOut = () => {
         localStorage.removeItem(LOCAL_STORAGE_KEY);
         localStorage.removeItem(REFRESH_STORAGE_KEY);
         dispatch(setUser(null));
@@ -94,5 +94,6 @@ export function useAuth() {
         handleSignIn,
         handleSignUp,
         handleSignOut,
+        tryRefreshToken,
     }
 }
