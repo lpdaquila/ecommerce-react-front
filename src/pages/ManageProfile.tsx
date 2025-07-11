@@ -11,6 +11,7 @@ import { EditProfileHandler } from "../components/handlers/edit-profile-hadler";
 import { ProfileAddress } from "../app/types/address";
 import { ManageAddressHandler } from "../components/handlers/manage-address-handler";
 import { useRefreshToken } from "../app/hooks/useRefreshToken";
+import { ManageProfileHandler } from "../components/handlers/manage-profile-handler";
 
 type View = 'profile' | 'edit' | 'addresses' | 'preferences'
 
@@ -108,11 +109,11 @@ export default function ManageProfile() {
                             maxWidth: "400px"
                         }}
                     >
-                        {activeView === 'profile' && profile && <ProfileInfoHandler
-                            onEditProfile={() => setActiveView('edit')} profile={profile} id={Number(profile_id)}
-                        />}
-                        {activeView === 'edit' && profile && <EditProfileHandler
-                            profile={profile} id={Number(profile_id)} />}
+                        {activeView === 'profile' && profile &&
+                            <ManageProfileHandler
+                                id={Number(profile_id)}
+                                profile={profile}
+                            />}
                         {activeView === 'addresses' &&
                             <ManageAddressHandler
                                 onRefresh={() => setRefreshAddress(!refreshAddress)}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { Button, Flex, Heading, IconButton, Select, Separator, Text } from "@radix-ui/themes";
+import { Flex, Heading, IconButton, Select, Separator, Text } from "@radix-ui/themes";
 import { ProfileAddress } from "../../app/types/address";
 import PrimaryButton from "../ui/buttons/primary-button";
-import { ArrowLeftIcon, Pencil1Icon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { CreateAddressHadler } from "./create-address-handler";
 import { EditAddressHadler } from "./edit-address-handler";
 import { SecondaryButton } from "../ui/buttons/secondary-button";
@@ -11,6 +11,7 @@ import { useRequests } from "../../app/hooks/useRequests";
 import { ErrorCallout } from "../ui/callouts/error-callout";
 import { SuccessCallout } from "../ui/callouts/success-callout";
 import { useRefreshToken } from "../../app/hooks/useRefreshToken";
+import { TurnBackBtn } from "../ui/buttons/turn-back-button";
 
 type View = 'view' | 'create' | 'edit'
 
@@ -124,22 +125,12 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
                 </>}
             {activeView === 'create' &&
                 <>
-                    <Button
-                        variant="soft"
-                        onClick={() => setActiveView('view')}
-                    >
-                        <ArrowLeftIcon />
-                    </Button>
+                    <TurnBackBtn onClick={() => setActiveView('view')} />
                     <CreateAddressHadler onSuccess={() => onRefresh()} />
                 </>}
             {activeView === 'edit' && selectedAddress &&
                 <>
-                    <Button
-                        variant="soft"
-                        onClick={() => setActiveView('view')}
-                    >
-                        <ArrowLeftIcon />
-                    </Button>
+                    <TurnBackBtn onClick={() => setActiveView('view')} />
                     <EditAddressHadler
                         id={+selectedId}
                         address={selectedAddress}
