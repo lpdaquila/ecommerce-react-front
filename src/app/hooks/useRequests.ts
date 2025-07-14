@@ -1,5 +1,6 @@
 import { AddressInfo, APIGetAdresses, } from "../types/address";
 import { APIGetProfile, APIGetUser, APISignIn } from "../types/auth"
+import { APIGetProductDetail, APIGetProducts } from "../types/products";
 import { useAPI } from "./useAPI"
 
 const signIn = async ({ email, password }: { email: string, password: string }) => {
@@ -103,6 +104,16 @@ const deleteAddress = async (id: number) => {
     return await useAPI(`auth/user/address/${id}`, 'DELETE')
 }
 
+// Products
+
+const getProducts = async () => {
+    return await useAPI<APIGetProducts>('products', 'GET', { undefined }, false);
+}
+
+const getProductDetail = async (slug: string) => {
+    return await useAPI<APIGetProductDetail>(`product/${slug}`, 'GET', { undefined }, false);
+}
+
 export const useRequests = () => ({
     // Auth
     signIn,
@@ -122,4 +133,8 @@ export const useRequests = () => ({
     getAddresses,
     editAddress,
     deleteAddress,
+
+    // Product
+    getProducts,
+    getProductDetail,
 })

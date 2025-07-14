@@ -6,6 +6,7 @@ const Home = lazy(() => import('../pages/Home'))
 const SignIn = lazy(() => import('../pages/SignIn'))
 const ManageProfile = lazy(() => import('../pages/ManageProfile'))
 const Product = lazy(() => import('../pages/Product'))
+// const Product = lazy(() => import('../components/ui/skeletons/product-page-skeleton'))
 
 const router = createBrowserRouter(
     createRoutesFromElements(
