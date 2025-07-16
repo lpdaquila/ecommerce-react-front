@@ -1,9 +1,15 @@
+export type SubVars = {
+    type: string;
+    name: string;
+}
+
 export type Product = {
     id: number;
     slug: string;
     name: string;
     sale_price: number;
     promo_price?: number;
+    sub_vars: SubVars[]
 }
 
 export type ProductDetail = {
