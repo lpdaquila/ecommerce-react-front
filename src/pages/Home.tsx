@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { SidebarContext } from "../contexts/sidebar-context";
 import { ShoppingCartCard } from "../components/ui/cards/shopping-cart-card";
 import { useRequests } from "../app/hooks/useRequests";
-import { APIGetProducts } from "../app/types/products";
+import { APIGetProducts, Product } from "../app/types/products";
 import { ErrorCallout } from "../components/ui/callouts/error-callout";
 import { ProductFilterHandler } from "../components/handlers/product-filter-handler";
 
@@ -19,7 +19,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState('');
   const [pageData, setPageData] = useState<APIGetProducts | null>(null);
-  const [selectedFilters, setSelectedFilters] = useState<{ [varType: string]: string[] }>({});
+  const [filters, setFilters] = useState({
+    priceRange: [0, 10000],
+    subVars: {} as Record<string, string[]>,
+  })
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   const handleGetProducts = async () => {
     setApiError('');
@@ -33,11 +37,46 @@ export default function Home() {
     setPageData(response.data ?? null);
   }
 
+  const handleFilterChange = (filter: {
+    priceRange: [number, number];
+    subVars: Record<string, string[]>;
+  }) => {
+    setFilters(filter)
+  }
+
   useEffect(() => {
     Promise.resolve([handleGetProducts()]).finally(() => {
       setLoading(false);
     })
   }, [])
+
+  useEffect(() => {
+    if (!pageData?.products) return;
+
+    const result = pageData.products.filter(product => {
+      const price = Number(product.sale_price ?? 0);
+
+      // filter by price
+      if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
+        return false;
+      }
+
+      // filter by sub_vars 
+      for (const [key, selectedOptions] of Object.entries(filters.subVars)) {
+        const productOptions = product.sub_vars?.[key] ?? [];
+
+        if (selectedOptions.length && !selectedOptions.some(opt =>
+          productOptions.includes(opt)
+        )) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    setFilteredProducts(result);
+    console.log('result: ', result)
+  }, [filters, pageData])
 
   return (
     <>
@@ -52,9 +91,12 @@ export default function Home() {
                 Filters
               </Heading>
               <Separator orientation="horizontal" size="4" mb="2" />
-              <Text>Price</Text>
-              <Slider defaultValue={[100]} />
-              <ProductFilterHandler products={pageData?.products ?? []} />
+              {pageData &&
+                <ProductFilterHandler
+                  onFilterChange={handleFilterChange}
+                  products={pageData.products}
+                />
+              }
             </Flex>
           </Card>
         </Sidebar>
@@ -69,7 +111,7 @@ export default function Home() {
               justify="center"
               align="center"
             >
-              {pageData.products.map(product => (
+              {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </Grid>
