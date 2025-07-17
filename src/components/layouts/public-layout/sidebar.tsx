@@ -1,8 +1,9 @@
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { ReactNode, useContext } from "react";
 import { SidebarContext } from "../../../contexts/sidebar-context";
-import { Box, Flex, IconButton } from "@radix-ui/themes";
+import { Box, Flex, IconButton, Separator } from "@radix-ui/themes";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { MobileStoreLogo } from "../../ui/logos/mobile-store-logo";
 
 type Props = {
     children: ReactNode;
@@ -32,13 +33,17 @@ export function Sidebar({ children }: Props) {
                 >
                     <aside className="h-full overflow-y-auto p-2 pt-2 md:pt-4">
                         {sidebarToggle &&
-                            <Flex justify="end">
-                                <IconButton
-                                    onClick={() => toggleSidebar()}
-                                >
-                                    <Cross1Icon />
-                                </IconButton>
-                            </Flex>
+                            <>
+                                <Flex justify="end">
+                                    <IconButton
+                                        onClick={() => toggleSidebar()}
+                                    >
+                                        <Cross1Icon />
+                                    </IconButton>
+                                </Flex>
+                                <MobileStoreLogo />
+                                <Separator size="4" />
+                            </>
                         }
                         {children}
                     </aside>

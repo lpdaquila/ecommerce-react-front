@@ -1,17 +1,13 @@
-import { Flex, IconButton, Container, Separator, Link, Box } from "@radix-ui/themes";
-import { useContext } from "react";
-import { SidebarContext } from "../../../../contexts/sidebar-context";
+import { Flex, Container, Separator, Link, Box } from "@radix-ui/themes";
 import SearchField from "../../../ui/fields/search-field";
 import PrimaryButton from "../../../ui/buttons/primary-button";
-import { MenuIcon } from "lucide-react";
 import { TopButtons } from "../../../top-buttons";
 import { ResponsiveCard } from "../../../ui/cards/responsive-card";
 import { ShoppingCartCard } from "../../../ui/cards/shopping-cart-card";
 import { StoreLogo } from "../../../ui/logos/store-logo";
+import { MobileMenuButton } from "../../../ui/buttons/mobile-menu-button";
 
 export default function Header() {
-    const { toggleSidebar } = useContext(SidebarContext);
-
     return (
         <header
             style={{
@@ -26,18 +22,7 @@ export default function Header() {
             <Flex direction="row"
                 justify={{ initial: "between", md: "end" }}
                 align="center">
-                <Box
-                    display={{ initial: 'block', md: 'none' }}>
-                    <IconButton
-                        variant="solid"
-                        size="2"
-                        highContrast
-                        onClick={toggleSidebar}
-                        aria-label="Alternar filtros"
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </Box>
+                <MobileMenuButton />
                 <Flex direction="column" align="end" justify="end">
                     <TopButtons />
                 </Flex>
