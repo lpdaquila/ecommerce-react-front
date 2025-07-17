@@ -1,6 +1,6 @@
-import { Box, CheckboxGroup, Separator, Slider, Text } from "@radix-ui/themes";
-import { APIGetProducts, Product } from "../../app/types/products";
-import { Fragment, useEffect, useState } from "react";
+import { CheckboxGroup, Separator, Slider, Text } from "@radix-ui/themes";
+import { Product } from "../../app/types/products";
+import { Fragment, useState } from "react";
 
 type ProductFilterProps = {
     products: Product[];
@@ -35,7 +35,7 @@ export function ProductFilterHandler({ products, onFilterChange }: ProductFilter
             (Array.isArray(options)
                 ? options
                 : Object.values(options)).forEach((opt) =>
-                    allFilters[varType].add(opt));
+                    allFilters[varType].add(opt as string));
         });
     });
 

@@ -1,13 +1,13 @@
-import { Card, Container, Flex, Grid, Heading, Separator, Skeleton, Slider, Text } from "@radix-ui/themes";
+import { Card, Container, Flex, Grid, Heading, Separator, Skeleton, } from "@radix-ui/themes";
 import SectionHeader from "../components/layouts/public-layout/section";
 import { Sidebar } from "../components/layouts/public-layout/sidebar";
 import Header from "../components/layouts/public-layout/headers/home-header";
 import { ProductCard } from "../components/layouts/public-layout/product-card";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SidebarContext } from "../contexts/sidebar-context";
 import { ShoppingCartCard } from "../components/ui/cards/shopping-cart-card";
 import { useRequests } from "../app/hooks/useRequests";
-import { APIGetProducts, Product } from "../app/types/products";
+import { APIGetProducts } from "../app/types/products";
 import { ErrorCallout } from "../components/ui/callouts/error-callout";
 import { ProductFilterHandler } from "../components/handlers/product-filter-handler";
 
@@ -23,7 +23,33 @@ export default function Home() {
     priceRange: [0, 10000],
     subVars: {} as Record<string, string[]>,
   })
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+  const filteredProducts = useMemo(() => {
+    if (!pageData?.products) return;
+
+    return pageData.products.filter(product => {
+      const price = Number(product.sale_price ?? 0);
+
+      // filter by price
+      if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
+        return false;
+      }
+
+      // filter by sub_vars 
+      for (const [key, selectedOptions] of Object.entries(filters.subVars)) {
+        const productOptions = product.sub_vars?.[key] ?? [];
+
+        if (selectedOptions.length && !selectedOptions.some(opt =>
+          productOptions.includes(opt)
+        )) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+  }, [filters, pageData])
 
   const handleGetProducts = async () => {
     setApiError('');
@@ -50,33 +76,33 @@ export default function Home() {
     })
   }, [])
 
-  useEffect(() => {
-    if (!pageData?.products) return;
+  // useEffect(() => {
+  //   if (!pageData?.products) return;
 
-    const result = pageData.products.filter(product => {
-      const price = Number(product.sale_price ?? 0);
+  //   const result = pageData.products.filter(product => {
+  //     const price = Number(product.sale_price ?? 0);
 
-      // filter by price
-      if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
-        return false;
-      }
+  //     // filter by price
+  //     if (price < filters.priceRange[0] || price > filters.priceRange[1]) {
+  //       return false;
+  //     }
 
-      // filter by sub_vars 
-      for (const [key, selectedOptions] of Object.entries(filters.subVars)) {
-        const productOptions = product.sub_vars?.[key] ?? [];
+  //     // filter by sub_vars 
+  //     for (const [key, selectedOptions] of Object.entries(filters.subVars)) {
+  //       const productOptions = product.sub_vars?.[key] ?? [];
 
-        if (selectedOptions.length && !selectedOptions.some(opt =>
-          productOptions.includes(opt)
-        )) {
-          return false;
-        }
-      }
-      return true;
-    });
+  //       if (selectedOptions.length && !selectedOptions.some(opt =>
+  //         productOptions.includes(opt)
+  //       )) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //   });
 
-    setFilteredProducts(result);
-    console.log('result: ', result)
-  }, [filters, pageData])
+  //   setFilteredProducts(result);
+  //   console.log('result: ', result)
+  // }, [filters, pageData])
 
   return (
     <>
@@ -111,9 +137,11 @@ export default function Home() {
               justify="center"
               align="center"
             >
-              {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+              {filteredProducts && filteredProducts.length == 0 ?
+                <Container>No products found</Container>
+                : filteredProducts && filteredProducts.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
             </Grid>
           }
         </Container>
