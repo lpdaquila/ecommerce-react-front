@@ -106,7 +106,6 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
                                     mt="2"
                                     onClick={() => setActiveView('edit')}
                                 >
-
                                     <Pencil1Icon />Edit Address
                                 </SecondaryButton>
                                 <Dialog
@@ -124,7 +123,6 @@ export function ManageAddressHandler({ addressList, onRefresh }: Props) {
                                         onRefresh();
                                     }}
                                 />
-
                             </Flex>
                         </>}
                 </>}

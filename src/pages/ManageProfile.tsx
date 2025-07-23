@@ -24,6 +24,8 @@ export default function ManageProfile() {
 
     const [refreshAddress, setRefreshAddress] = useState(false);
 
+    const [refreshProfile, setRefreshProfile] = useState(false);
+
     const { getProfile, getAddresses } = useRequests();
 
     const handleGetProfile = async (id: number) => {

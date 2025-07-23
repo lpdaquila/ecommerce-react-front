@@ -1,15 +1,13 @@
 import { Flex, Heading, Separator, Strong, Text } from "@radix-ui/themes";
 import { useState } from "react";
-import PrimaryButton from "../ui/buttons/primary-button";
 import { Profile } from "../../app/types/auth";
 
 type ProfileCardProps = {
     id: number;
     profile: Profile;
-    onEditProfile: () => void;
 }
 
-export function ProfileInfoHandler({ id, profile, onEditProfile }: ProfileCardProps) {
+export function ProfileInfoHandler({ id, profile }: ProfileCardProps) {
     const [name, setName] = useState(() => profile.name);
     const [email, setEmail] = useState(() => profile.email);
     const [document, setDocument] = useState(() => profile.document ?? 'Not given');
@@ -30,7 +28,7 @@ export function ProfileInfoHandler({ id, profile, onEditProfile }: ProfileCardPr
             <Strong>Phone: </Strong>
             <Text>{phone}</Text>
             <Separator size="4" />
-            <PrimaryButton onClick={onEditProfile}>Edit Profile</PrimaryButton>
+
         </Flex>
     )
 }

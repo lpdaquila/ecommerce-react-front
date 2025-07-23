@@ -32,13 +32,8 @@ export function EditProfileHandler({ id, profile }: { id: number, profile: Profi
     }
 
     return (
-        <Flex direction="column" align="center">
-            <Heading
-                style={{
-                    marginTop: "5%",
-                    marginBottom: "10%"
-                }}
-            >
+        <Flex direction="column" align="center" mt="4" gap="2">
+            <Heading>
                 Edit Profile
             </Heading>
             {apiError && <ErrorCallout msg={apiError} />}

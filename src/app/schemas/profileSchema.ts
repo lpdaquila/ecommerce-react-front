@@ -23,6 +23,9 @@ export const profileSchema = z.object({
         .min(10, "Phone must have at least 10 numbers")
         .max(15, "Please give a valid phone")
         .optional()
+        .refine((val) => typeof val === "string" && /\d/.test(val), {
+            message: "Phone must contain numbers"
+        })
         .or(z.literal(""))
 });
 
